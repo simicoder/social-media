@@ -22,7 +22,11 @@ const StyledForm = styled.form`
   padding: 2vw;
   border-radius: 10px;
   box-sizing: border-box;
-  margin: 5px;
+  margin-top: 20px;
+
+  @media only screen and (max-width: 750px) {
+    width: 90%;
+  }
 `;
 
 const initialState = {
@@ -107,26 +111,19 @@ const AuthForm = () => {
         encType="multipart/form-data"
       >
         <h1>{isSignup ? 'Sign up' : 'Sign in'}</h1>
-        <div>
-          {isSignup && <TextInput placeholder="username" name="username" onChange={handleChange} />}
-          <TextInput placeholder="email" name="email" onChange={handleChange} type="email" />
-          <TextInput
-            placeholder="password"
-            name="password"
-            onChange={handleChange}
-            type="password"
-          />
-          {isSignup && (
-            <>
-              <TextInput
-                placeholder="password"
-                name="confirmPassword"
-                onChange={handleChange}
-                type="password"
-              />
-            </>
-          )}
-        </div>
+        {isSignup && <TextInput placeholder="username" name="username" onChange={handleChange} />}
+        <TextInput placeholder="email" name="email" onChange={handleChange} type="email" />
+        <TextInput placeholder="password" name="password" onChange={handleChange} type="password" />
+        {isSignup && (
+          <>
+            <TextInput
+              placeholder="password"
+              name="confirmPassword"
+              onChange={handleChange}
+              type="password"
+            />
+          </>
+        )}
         {isSignup && <CropperInput defaultImg={profileIcon} setState={setCroppie} />}
         <Button type="submit">{isSignup ? 'Sign Up' : 'Sign In'}</Button>
         {/* <GoogleLogin
@@ -143,15 +140,15 @@ const AuthForm = () => {
       </StyledForm>
       <div onClick={switchMode}>
         {isSignup ? (
-          <div>
+          <>
             Already have an account?
             <Button>Sign in</Button>
-          </div>
+          </>
         ) : (
-          <div>
+          <>
             Don&#39;t have an account?
             <Button>Sign Up</Button>
-          </div>
+          </>
         )}
       </div>
     </>

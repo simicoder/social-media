@@ -17,6 +17,18 @@ export const getPosts = async (req: Request, res: Response) => {
   }
 };
 
+export const searchPosts = async (req: Request, res: Response) => {
+  const { text } = req.params;
+
+  try {
+    const Posts = await Post.find({ title: text });
+
+    res.status(200).json(Posts);
+  } catch (error) {
+    res.status(404).json({ description: error.description });
+  }
+};
+
 export const createPost = async (req: Request, res: Response) => {
   const { title, description, creatorName } = req.body;
   const selectedFile = req.file.filename;

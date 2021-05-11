@@ -1,22 +1,36 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { NavLink, Link, useHistory, useLocation } from 'react-router-dom';
+import { NavLink, Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LogoIcon from '../../../assets/Icons/LogoIcon.png';
 import Button from '../../atoms/Button/Button';
 import { hostUrl } from '../../../constants/url';
 import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
+import MenuButton from '../../atoms/MenuButton/MenuButton';
+import SearchBar from '../../molecules/SearchBar/SearchBar';
+import useWindowWidth from '../../../utils/useWindowWidth';
+import SearchButton from '../../atoms/SearchButton/SearchButton';
+import BackButton from '../../atoms/BackButton/BackButton';
 
 const StyledWrapper = styled.nav`
   display: flex;
+  flex-direction: row;
   width: 100%;
   padding: 0px;
   background-color: ${({ theme }) => theme.itemsBackground};
   align-items: center;
   text-align: center;
   position: fixed;
-  justify-content: space-between;
+  justify-content: space-evenly;
   z-index: 9999;
+  min-height: 48px;
+`;
+
+const StyledLogoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 5px;
 `;
 
 const StyledLogoLink = styled(NavLink)`
@@ -28,26 +42,15 @@ const StyledLogoLink = styled(NavLink)`
   background-position: 50% 50%;
   background-size: 100%;
   border: none;
-  margin-top: 0.5vh;
-  margin-bottom: 0.5vh;
-  margin-left: 2vh;
+  margin: 0.5vh 0 0.5vh 0.5vh;
+
+  @media only screen and (max-width: 600px) {
+    margin: 0.5vh 0 0.5vh 0;
+  }
 `;
 
-const StyledLinksList = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-`;
-
-const StyledLi = styled.li`
-  display: inline-block;
-`;
-
-const StyledNavLink = styled(NavLink)`
-  text-decoration: none;
-  color: white;
-  font-size: 2rem;
-  margin-left: 2em;
+const StyledSearchBarContainer = styled.div`
+  width: 600px;
 `;
 
 const StyledProfileContainer = styled.div`
@@ -55,13 +58,23 @@ const StyledProfileContainer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
+
+  @media only screen and (max-width: 600px) {
+    margin-right: 10px;
+  }
 `;
 
-const Navbar: React.FC = () => {
+type Props = {
+  isOpen: boolean;
+  setIsOpen: Function;
+};
+
+const Navbar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')!));
+  const [activeSearchBar, setActiveSearchBar] = useState(false);
   const dispatch = useDispatch();
-  const location = useLocation();
   const history = useHistory();
+  const windowWidth = useWindowWidth();
 
   const logout = () => {
     dispatch({ type: 'LOGOUT' });
@@ -71,28 +84,46 @@ const Navbar: React.FC = () => {
     setUser(null);
   };
 
+  const setOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <StyledWrapper>
-      <StyledLogoLink to="/" />
-      <StyledLinksList>
-        <StyledLi>
-          <StyledNavLink to="/">HOME</StyledNavLink>
-        </StyledLi>
-      </StyledLinksList>
-      <StyledProfileContainer>
-        {user?.result ? (
-          <>
-            <Button color="secondary" onClick={logout}>
-              Logout
-            </Button>
-            <ProfileImage width="40px" alt="avatar" src={hostUrl + user?.result.selectedFile} />
-          </>
-        ) : (
-          <Link to="/auth">
-            <Button>Sign In</Button>
-          </Link>
-        )}
-      </StyledProfileContainer>
+      {activeSearchBar ? (
+        <>
+          <BackButton onClick={() => setActiveSearchBar(false)} />
+          <SearchBar />
+        </>
+      ) : (
+        <>
+          <StyledLogoContainer>
+            {windowWidth < 1024 && <MenuButton onClick={setOpen} />}
+            <StyledLogoLink to="/"></StyledLogoLink>
+          </StyledLogoContainer>
+          {windowWidth < 550 ? (
+            <div onClick={() => setActiveSearchBar(true)}>
+              <SearchButton />
+            </div>
+          ) : (
+            <StyledSearchBarContainer>
+              <SearchBar />
+            </StyledSearchBarContainer>
+          )}
+          <StyledProfileContainer>
+            {user?.result ? (
+              <>
+                <Button onClick={logout}>Logout</Button>
+                <ProfileImage width="40px" alt="avatar" src={hostUrl + user?.result.selectedFile} />
+              </>
+            ) : (
+              <Link to="/auth">
+                <Button>Sign In</Button>
+              </Link>
+            )}
+          </StyledProfileContainer>
+        </>
+      )}
     </StyledWrapper>
   );
 };

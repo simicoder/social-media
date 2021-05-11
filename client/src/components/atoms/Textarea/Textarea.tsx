@@ -1,10 +1,9 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const Textarea = styled.textarea`
   margin-top: 20px;
   font-family: inherit;
-  width: 100%;
+  width: 90%;
   height: 20vh;
   border: 0;
   border-bottom: 2px solid grey;

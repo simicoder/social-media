@@ -1,9 +1,8 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const TextInput = styled.input`
   font-family: inherit;
-  width: 100%;
+  width: 90%;
   border: 0;
   border-bottom: 2px solid grey;
   outline: 0;

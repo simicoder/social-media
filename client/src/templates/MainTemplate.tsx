@@ -24,11 +24,11 @@ const MainTemplate: React.FC = () => {
         {isUpdate ? (
           <PostForm currentId={currentId} setCurrentId={setCurrentId} setIsUpdate={setIsUpdate} />
         ) : (
-          <div>
-            {posts.map((post: IPost) => (
-              <Post post={post} setCurrentId={setCurrentId} setIsUpdate={setIsUpdate} />
+          <>
+            {posts.map((post: IPost, i: number) => (
+              <Post key={i} post={post} setCurrentId={setCurrentId} setIsUpdate={setIsUpdate} />
             ))}
-          </div>
+          </>
         )}
       </UserPageTemplate>
     </>

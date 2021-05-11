@@ -14,37 +14,39 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 550px;
-  min-height: 750px;
+  min-height: 630px;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.itemsBackground};
   margin: 10px 0 50px;
+
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
-const StyledImg = styled.div<{ src: string }>`
+const StyledImg = styled.img<{ src: string }>`
   margin-top: 10px;
   background: no-repeat 50% 50%/100% 100% url(${({ src }) => src});
-  width: 550px;
-  height: 550px;
+  max-width: 100%;
+  height: auto;
   border-radius: 2px;
   border: none;
+  display: flex;
 `;
 
 const StyledTitle = styled.h1`
   color: #ffffff;
-  background-color: #5a5a5a;
   padding: 5px;
-  text-align: center;
-  border-radius: 8px;
-`;
-
-const StyledLikeButton = styled.button`
-  background: #5a5a5a;
-  border: none;
-  border-radius: 10px;
-  height: 50px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  color: #a0a0a0;
+  max-width: 500px;
+  vertical-align: baseline;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  border-radius: 8px;
+  font-size: 1em;
 `;
 
 const StyledTitleContainer = styled.div`
@@ -61,6 +63,17 @@ const StyledHeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 95%;
+`;
+
+const StyledLikeButtonContainer = styled.div`
+  background: #5a5a5a;
+  border: none;
+  border-radius: 10px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  color: #a0a0a0;
+  padding: 5px;
 `;
 
 const StyledCreatorContainer = styled.div`
@@ -87,6 +100,7 @@ const StyledDescriptionContainer = styled.p`
   word-wrap: break-word;
   overflow-wrap: break-word;
   word-break: break-word;
+  margin: 10px;
 `;
 
 interface IProps {
@@ -108,7 +122,6 @@ export interface IPost {
 
 const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const user = JSON.parse(localStorage.getItem('profile')!);
 
   const updatePost = () => {
@@ -120,7 +133,7 @@ const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
     if (post.likes.length > 0) {
       return post.likes.find((like) => like === (user?.result?.googleId || user?.result?._id)) ? (
         <>
-          <LikeIcon isActive={false} />
+          <LikeIcon disabled={!user?.result} isActive={false} />
           &nbsp;
           {post.likes.length > 2
             ? `You and ${post.likes.length - 1} others`
@@ -128,7 +141,7 @@ const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
         </>
       ) : (
         <>
-          <LikeIcon isActive={true} />
+          <LikeIcon disabled={!user?.result} isActive={true} />
           &nbsp;
           {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
         </>
@@ -137,7 +150,7 @@ const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
 
     return (
       <>
-        <LikeIcon isActive={true} />
+        <LikeIcon disabled={!user?.result} isActive={true} />
         &nbsp;Like
       </>
     );
@@ -156,12 +169,10 @@ const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
       <StyledImg src={hostUrl + post.selectedFile} />
 
       <StyledTitleContainer>
-        <div>
-          <StyledTitle>{post.title}</StyledTitle>
-        </div>
-        <StyledLikeButton disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
+        <StyledTitle>{post.title}</StyledTitle>
+        <StyledLikeButtonContainer onClick={() => dispatch(likePost(post._id))}>
           <Likes />
-        </StyledLikeButton>
+        </StyledLikeButtonContainer>
       </StyledTitleContainer>
 
       <StyledDescriptionContainer>{post.description}</StyledDescriptionContainer>

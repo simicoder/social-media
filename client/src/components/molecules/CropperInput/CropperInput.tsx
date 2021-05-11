@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Croppie from 'croppie';
 import 'croppie/croppie.css';
+import useWindowWidth from '../../../utils/useWindowWidth';
 
 const StyledFileInput = styled.input`
   display: none;
@@ -17,6 +18,7 @@ const StyledFileLabel = styled.label`
 `;
 
 const StyledImg = styled.div<{ src: string }>`
+  margin-top: 10px;
   background: no-repeat 50% 50%/90% 90% url(${({ src }) => src});
   width: 300px;
   height: 300px;
@@ -25,7 +27,7 @@ const StyledImg = styled.div<{ src: string }>`
 `;
 
 const StyledImageCropper = styled.div`
-  padding: 20px;
+  margin-top: 20px;
 `;
 
 interface IProps {
@@ -38,6 +40,8 @@ const CropperInput: React.FC<IProps> = ({ defaultImg, setState }) => {
     selectedFile: '',
     urlSelectedFile: defaultImg,
   };
+
+  const windowWidth = useWindowWidth();
 
   const [data, setData] = useState(initialState);
 
@@ -58,12 +62,12 @@ const CropperInput: React.FC<IProps> = ({ defaultImg, setState }) => {
           const croppieInstance = new Croppie(el, {
             enableExif: true,
             viewport: {
-              height: 450,
-              width: 450,
+              height: windowWidth < 1024 ? 170 : 400,
+              width: windowWidth < 1024 ? 170 : 400,
             },
             boundary: {
-              height: 500,
-              width: 600,
+              height: windowWidth < 1024 ? 270 : 440,
+              width: windowWidth < 1024 ? 270 : 440,
             },
           });
           croppieInstance.bind({

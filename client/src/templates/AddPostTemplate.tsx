@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import UserPageTemplate from './UserPageTemplate';
 import GlobalStyle from '../theme/GlobalStyle';
 import PostForm from '../components/organisms/PostForm/PostForm';

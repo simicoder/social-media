@@ -6,6 +6,7 @@ import addIcon from '../../../assets/Icons/addIcon.svg';
 import homeIcon from '../../../assets/Icons/homeIcon.svg';
 
 const StyledWrapper = styled.nav`
+  z-index: 1000;
   margin: 0;
   padding: 0;
   width: 200px;
@@ -13,15 +14,17 @@ const StyledWrapper = styled.nav`
   position: fixed;
   height: 100%;
   overflow: auto;
-  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const StyledLinksList = styled.ul`
-  margin: 0;
   padding: 20px;
   list-style: none;
   display: flex;
   flex-direction: column;
+  margin-top: 3em;
 `;
 
 const StyledLi = styled.li`
@@ -39,12 +42,11 @@ const StyledNavLink = styled(Link)`
 const StyledFooter = styled.footer`
   width: 200px;
   background-color: black;
-  bottom: 0;
   padding: 0.5vh;
   color: #5c5a5c;
-  display: block;
-  position: fixed;
+  display: flex;
   text-align: center;
+  justify-content: center;
 `;
 
 const Sidebar: React.FC = () => (

@@ -15,7 +15,7 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.itemsBackground};
-  width: 800px;
+  width: 550px;
   min-height: 500px;
   align-items: center;
   justify-content: center;
@@ -23,6 +23,10 @@ const StyledForm = styled.form`
   border-radius: 10px;
   box-sizing: border-box;
   margin: 5px;
+
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 const StyledTitle = styled.h1`
@@ -59,7 +63,6 @@ const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) =>
 
   useEffect(() => {
     if (post) setPostData(post);
-    console.log(post);
   }, [post]);
 
   const clear = () => {
