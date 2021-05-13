@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import ButtonIcon from '../../atoms/Icon/ButtonIcon';
+import ButtonIcon from '../../atoms/Icon/Icon';
 import addIcon from '../../../assets/Icons/addIcon.svg';
 import homeIcon from '../../../assets/Icons/homeIcon.svg';
 
@@ -17,6 +17,24 @@ const StyledWrapper = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px ${({ theme }) => theme.background};
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.button};
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${({ theme }) => theme.active};
+  }
 `;
 
 const StyledLinksList = styled.ul`

@@ -11,7 +11,7 @@ export const getPosts = async (req: Request, res: Response) => {
   try {
     const Posts = await Post.find();
 
-    res.status(200).json(Posts);
+    res.status(200).json(Posts.reverse());
   } catch (error) {
     res.status(404).json({ description: error.description });
   }
@@ -69,6 +69,27 @@ export const updatePost = async (req: Request, res: Response) => {
   const updatedPost = await Post.findById(id);
 
   res.json(updatedPost);
+};
+
+export const commentPost = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { text, creatorName } = req.body;
+  const creator = (req as any).userId;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+
+  const post = await Post.findById(id);
+
+  const newComment: any = {
+    text,
+    creator,
+    creatorName,
+  };
+
+  (post as IPost).comments.unshift(newComment);
+  (post as IPost).save();
+
+  res.json(post);
 };
 
 export const deletePost = async (req: Request, res: Response) => {

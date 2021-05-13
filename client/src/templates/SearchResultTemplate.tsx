@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import UserPageTemplate from './UserPageTemplate';
 import GlobalStyle from '../theme/GlobalStyle';
-import Post, { IPost } from '../components/molecules/Post/Post';
+import Post, { IPost } from '../components/organisms/Post/Post';
 
 const SearchResultTemplate: React.FC = () => {
   const [currentId, setCurrentId] = useState(0);

@@ -1,5 +1,5 @@
 import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
-import { IPost } from '../components/molecules/Post/Post';
+import { IPost } from '../components/organisms/Post/Post';
 
 export default (posts = [], action: { type: string; payload: { _id: number } & number }) => {
   switch (action.type) {
@@ -8,7 +8,7 @@ export default (posts = [], action: { type: string; payload: { _id: number } & n
     case LIKE:
       return posts.map((post: IPost) => (post._id === action.payload._id ? action.payload : post));
     case CREATE:
-      return [...posts, action.payload];
+      return [action.payload, ...posts];
     case UPDATE:
       return posts.map((post: IPost) => (post._id === action.payload._id ? action.payload : post));
     case DELETE:

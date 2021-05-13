@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 import { likePost, deletePost } from '../../../actions/posts';
 import LikeIcon from '../../atoms/LikeIcon/LikeIcon';
 import Button from '../../atoms/Button/Button';
 import { hostUrl } from '../../../constants/url';
 import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
+import CommentForm from '../../molecules/CommentForm/CommentForm';
+import Comments from '../../molecules/Comments/Comments';
+import Paragraph from '../../atoms/Paragraph/Paragraph';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -91,18 +93,6 @@ const StyledCreatorTag = styled.div`
   margin-left: 10px;
 `;
 
-const StyledDescriptionContainer = styled.p`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 500px;
-  vertical-align: baseline;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  margin: 10px;
-`;
-
 interface IProps {
   post: IPost;
   setCurrentId: Function;
@@ -118,6 +108,7 @@ export interface IPost {
   createdAt: string;
   likes: Array<string>;
   _id: number;
+  comments: any;
 }
 
 const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
@@ -175,7 +166,11 @@ const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
         </StyledLikeButtonContainer>
       </StyledTitleContainer>
 
-      <StyledDescriptionContainer>{post.description}</StyledDescriptionContainer>
+      <Paragraph>{post.description}</Paragraph>
+
+      <CommentForm id={post._id} />
+
+      {post.comments.length > 0 && <Comments comments={post.comments} />}
 
       {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
         <Button onClick={() => dispatch(deletePost(post._id))}>Delete</Button>

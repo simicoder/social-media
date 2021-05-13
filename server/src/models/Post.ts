@@ -23,7 +23,8 @@ const postSchema = new mongoose.Schema({
     {
       text: String,
       created: { type: Date, default: Date.now },
-      postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      creatorName: String,
     },
   ],
 });

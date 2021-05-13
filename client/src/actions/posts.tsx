@@ -46,6 +46,18 @@ export const updatePost =
     }
   };
 
+export const commentPost =
+  (id: number, comment: Object) =>
+  async (dispatch: (arg0: { type: string; payload: string }) => void) => {
+    try {
+      const { data } = await api.commentPost(id, comment);
+
+      dispatch({ type: UPDATE, payload: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 export const likePost =
   (id: number) => async (dispatch: (arg0: { type: string; payload: string }) => void) => {
     const user = JSON.parse(localStorage.getItem('profile')!);

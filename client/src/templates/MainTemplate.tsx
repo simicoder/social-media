@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UserPageTemplate from './UserPageTemplate';
 import GlobalStyle from '../theme/GlobalStyle';
-import Post, { IPost } from '../components/molecules/Post/Post';
+import Post, { IPost } from '../components/organisms/Post/Post';
 import PostForm from '../components/organisms/PostForm/PostForm';
 
 import { getPosts } from '../actions/posts';
