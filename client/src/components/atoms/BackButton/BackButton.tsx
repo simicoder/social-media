@@ -5,7 +5,6 @@ import arrowBackIcon from '../../../assets/Icons/arrowBackIcon.svg';
 const BackButton = styled.button`
   background-color: ${({ theme }) => theme.background};
   border: none;
-  outline: 0;
   background-image: url(${arrowBackIcon});
   background-repeat: no-repeat;
   background-position: 50% 50%;

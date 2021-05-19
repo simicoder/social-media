@@ -37,7 +37,7 @@ interface IProps {
 
 const CropperInput: React.FC<IProps> = ({ defaultImg, setState }) => {
   const initialState = {
-    selectedFile: '',
+    selectedFile: new Blob(),
     urlSelectedFile: defaultImg,
   };
 
@@ -45,15 +45,18 @@ const CropperInput: React.FC<IProps> = ({ defaultImg, setState }) => {
 
   const [data, setData] = useState(initialState);
 
-  const handleImage = (e: any) => {
+  const handleImage = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (e.target.files[0]) {
+    const target = e.target as typeof e.target & {
+      files: Array<Blob>;
+    };
+    if (target.files[0]) {
       const oFReader = new FileReader();
-      oFReader.readAsDataURL(e.target.files[0]);
+      oFReader.readAsDataURL(target.files[0]);
 
       oFReader.onload = (oFREvent: any) => {
         setData({
-          selectedFile: e.target.files[0],
+          selectedFile: target.files[0],
           urlSelectedFile: oFREvent.target.result,
         });
 
@@ -81,7 +84,7 @@ const CropperInput: React.FC<IProps> = ({ defaultImg, setState }) => {
 
   return (
     <>
-      {data.selectedFile ? (
+      {data.selectedFile.size ? (
         <StyledImageCropper id="imageCropper"></StyledImageCropper>
       ) : (
         <StyledFileLabel>

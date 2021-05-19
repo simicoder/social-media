@@ -11,7 +11,6 @@ const MenuButton = styled.button`
   border-radius: 2px;
   border: none;
   margin-left: 10px;
-  outline: 0;
   width: 5vh;
   height: 5vh;
   transition: all 0.2s;

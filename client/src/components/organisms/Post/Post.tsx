@@ -11,7 +11,7 @@ import CommentForm from '../../molecules/CommentForm/CommentForm';
 import Comments from '../../molecules/Comments/Comments';
 import Paragraph from '../../atoms/Paragraph/Paragraph';
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,7 +36,7 @@ const StyledImg = styled.img<{ src: string }>`
   display: flex;
 `;
 
-const StyledTitle = styled.h1`
+const StyledTitle = styled.span`
   color: #ffffff;
   padding: 5px;
   display: flex;
@@ -49,6 +49,7 @@ const StyledTitle = styled.h1`
   word-break: break-word;
   border-radius: 8px;
   font-size: 1em;
+  font-weight: 600;
 `;
 
 const StyledTitleContainer = styled.div`
@@ -76,6 +77,7 @@ const StyledLikeButtonContainer = styled.div`
   align-items: center;
   color: #a0a0a0;
   padding: 5px;
+  margin: 2px;
 `;
 
 const StyledCreatorContainer = styled.div`

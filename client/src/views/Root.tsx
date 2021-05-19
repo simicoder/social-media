@@ -18,16 +18,14 @@ function Root() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <article>
-          <BrowserRouter>
-            <Switch>
-              <Route exact path={routes.home} component={MainTemplate} />
-              <Route exact path={routes.addPost} component={AddPostTemplate} />
-              <Route exact path={routes.auth} component={AuthTemplate} />
-              <Route exact path={routes.search} component={SearchResultTemplate} />
-            </Switch>
-          </BrowserRouter>
-        </article>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path={routes.home} component={MainTemplate} />
+            <Route exact path={routes.addPost} component={AddPostTemplate} />
+            <Route exact path={routes.auth} component={AuthTemplate} />
+            <Route exact path={routes.search} component={SearchResultTemplate} />
+          </Switch>
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   );

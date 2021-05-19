@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import UserPageTemplate from './UserPageTemplate';
 import GlobalStyle from '../theme/GlobalStyle';
 import Post, { IPost } from '../components/organisms/Post/Post';

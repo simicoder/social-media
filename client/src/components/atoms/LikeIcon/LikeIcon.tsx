@@ -14,7 +14,6 @@ const LikeIcon = styled.button<{ isActive: boolean }>`
   background-size: 70% 70%;
   border: none;
   background-color: black;
-  outline: none;
 
   :hover {
     background-color: ${({ theme }) => theme.active};

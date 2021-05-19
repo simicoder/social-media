@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Navbar from '../components/organisms/Navbar/Navbar';
 import Sidebar from '../components/organisms/Sidebar/Sidebar';
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.section`
   padding-top: 70px;
   display: flex;
   flex-direction: column;
@@ -34,7 +34,9 @@ const UserPageTemplate: React.FC<Props> = ({ children }) => {
     <>
       <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
       {isOpen && <Sidebar />}
-      <StyledWrapper>{children}</StyledWrapper>
+      <main>
+        <StyledWrapper>{children}</StyledWrapper>
+      </main>
     </>
   );
 };

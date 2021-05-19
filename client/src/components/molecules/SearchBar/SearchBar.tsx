@@ -21,8 +21,7 @@ const StyledInput = styled.input`
   color: ${({ theme }) => theme.color};
 
   :focus {
-    outline: 0;
-    border: solid 1px #535353;
+    outline: solid 1px #535353;
   }
 `;
 

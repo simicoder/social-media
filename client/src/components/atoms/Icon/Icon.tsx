@@ -11,7 +11,6 @@ const Icon = styled.button<{ size: number; icon: string }>`
   background-position: 50% 50%;
   background-size: 70% 70%;
   border: none;
-  outline: 0;
 `;
 
 export default Icon;

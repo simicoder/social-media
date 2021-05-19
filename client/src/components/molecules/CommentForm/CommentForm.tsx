@@ -22,8 +22,7 @@ const StyledInput = styled.input`
   margin: 10px 0 10px 0;
 
   :focus {
-    outline: 0;
-    border: solid 1px #535353;
+    outline: solid 1px #535353;
   }
 `;
 
@@ -39,10 +38,13 @@ const CommentBar: React.FC<IProps> = ({ id }) => {
     e.preventDefault();
 
     const text = e.target.text.value;
-    const creatorName = user.result.username;
 
-    dispatch(commentPost(id, { text, creatorName }));
-    e.target.text.value = '';
+    if (text) {
+      const creatorName = user.result.username;
+
+      dispatch(commentPost(id, { text, creatorName }));
+      e.target.text.value = '';
+    }
   };
 
   return (

@@ -55,7 +55,7 @@ const AuthForm = () => {
     setShowPassword(false);
   };
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('email', form.email);
@@ -111,9 +111,17 @@ const AuthForm = () => {
         encType="multipart/form-data"
       >
         <h1>{isSignup ? 'Sign up' : 'Sign in'}</h1>
-        {isSignup && <TextInput placeholder="username" name="username" onChange={handleChange} />}
-        <TextInput placeholder="email" name="email" onChange={handleChange} type="email" />
-        <TextInput placeholder="password" name="password" onChange={handleChange} type="password" />
+        {isSignup && (
+          <TextInput placeholder="username" name="username" onChange={handleChange} required />
+        )}
+        <TextInput placeholder="email" name="email" onChange={handleChange} type="email" required />
+        <TextInput
+          placeholder="password"
+          name="password"
+          onChange={handleChange}
+          type="password"
+          required
+        />
         {isSignup && (
           <>
             <TextInput
@@ -121,6 +129,7 @@ const AuthForm = () => {
               name="confirmPassword"
               onChange={handleChange}
               type="password"
+              required
             />
           </>
         )}
