@@ -133,7 +133,9 @@ const AuthForm = () => {
             />
           </>
         )}
-        {isSignup && <CropperInput defaultImg={profileIcon} setState={setCroppie} />}
+        {isSignup && (
+          <CropperInput defaultImg={profileIcon} setCroppie={setCroppie} croppie={croppie} />
+        )}
         <Button type="submit">{isSignup ? 'Sign Up' : 'Sign In'}</Button>
         {/* <GoogleLogin
           clientId="564033717568-e5p23rhvcs4i6kffgsbci1d64r8hp6fn.apps.googleusercontent.com"

@@ -73,7 +73,7 @@ const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) =>
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    if (croppie !== null) {
+    if (croppie !== null && postData.title && user.result.username) {
       croppie
         .result({
           type: 'blob',
@@ -120,6 +120,7 @@ const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) =>
         placeholder="title"
         value={postData.title}
         onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+        required
       />
       <Textarea
         name="description"
@@ -129,10 +130,13 @@ const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) =>
       />
       <CropperInput
         defaultImg={currentId ? hostUrl + post.selectedFile : uploadFileIcon}
-        setState={setCroppie}
+        setCroppie={setCroppie}
+        croppie={croppie}
       />
-      <Button>Submit</Button>
-      <Button onClick={clear}>Clear</Button>
+      <Button type="submit">Submit</Button>
+      <Button type="reset" onClick={clear}>
+        Clear
+      </Button>
     </StyledForm>
   );
 };

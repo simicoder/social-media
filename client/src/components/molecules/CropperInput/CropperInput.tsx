@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import Croppie from 'croppie';
 import 'croppie/croppie.css';
 import useWindowWidth from '../../../utils/useWindowWidth';
+import Icon from '../../atoms/Icon/Icon';
+import removeIcon from '../../../assets/Icons/removeIcon.svg';
+import addIcon from '../../../assets/Icons/addIcon.svg';
 
 const StyledFileInput = styled.input`
   display: none;
 `;
 
-const StyledFileLabel = styled.label`
+const StyledFileButton = styled.button`
   margin: 10px;
+  background-color: transparent;
   transition: all 0.2s;
+  border: none;
 
   :hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
+`;
+
+const StyledButtonsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 const StyledImg = styled.div<{ src: string }>`
@@ -32,14 +42,17 @@ const StyledImageCropper = styled.div`
 
 interface IProps {
   defaultImg: string;
-  setState: Function;
+  setCroppie: Function;
+  croppie: any;
 }
 
-const CropperInput: React.FC<IProps> = ({ defaultImg, setState }) => {
+const CropperInput: React.FC<IProps> = ({ defaultImg, setCroppie, croppie }) => {
   const initialState = {
     selectedFile: new Blob(),
     urlSelectedFile: defaultImg,
   };
+
+  const fileInput = useRef<HTMLInputElement>(null);
 
   const windowWidth = useWindowWidth();
 
@@ -62,7 +75,7 @@ const CropperInput: React.FC<IProps> = ({ defaultImg, setState }) => {
 
         const el = document.getElementById('imageCropper');
         if (el) {
-          const croppieInstance = new Croppie(el, {
+          const croppieInstance: any = new Croppie(el, {
             enableExif: true,
             viewport: {
               height: windowWidth < 1024 ? 170 : 400,
@@ -76,7 +89,7 @@ const CropperInput: React.FC<IProps> = ({ defaultImg, setState }) => {
           croppieInstance.bind({
             url: oFREvent.target.result,
           });
-          setState(croppieInstance);
+          setCroppie(croppieInstance);
         }
       };
     }
@@ -85,18 +98,43 @@ const CropperInput: React.FC<IProps> = ({ defaultImg, setState }) => {
   return (
     <>
       {data.selectedFile.size ? (
-        <StyledImageCropper id="imageCropper"></StyledImageCropper>
+        <>
+          <StyledImageCropper id="imageCropper" />
+          <StyledButtonsWrapper>
+            <Icon
+              icon={removeIcon}
+              size={64}
+              type="button"
+              onClick={() => {
+                croppie.setZoom(croppie._currentZoom - 0.01);
+              }}
+            />
+            <Icon
+              icon={addIcon}
+              size={64}
+              type="button"
+              onClick={() => {
+                croppie.setZoom(croppie._currentZoom + 0.01);
+              }}
+            />
+          </StyledButtonsWrapper>
+        </>
       ) : (
-        <StyledFileLabel>
+        <StyledFileButton
+          onClick={() => {
+            fileInput.current && fileInput.current.click();
+          }}
+        >
           <StyledImg src={data.urlSelectedFile} />
           <StyledFileInput
+            ref={fileInput}
             type="file"
             required
             name="selectedFile"
             accept=".jpg, .jpeg, .png"
             onChange={handleImage}
           />
-        </StyledFileLabel>
+        </StyledFileButton>
       )}
     </>
   );
