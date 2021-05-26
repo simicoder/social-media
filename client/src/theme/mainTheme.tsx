@@ -3,6 +3,7 @@ export const theme = {
   itemsBackground: '#242424',
   button: '#808080',
   active: '#686767',
+  error: '#e22a2a',
   color: 'white',
   light: 300,
   bold: 600,

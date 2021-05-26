@@ -25,6 +25,12 @@ const StyledFileButton = styled.button`
 const StyledButtonsWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  width: 40%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.button};
 `;
 
 const StyledImg = styled.div<{ src: string }>`
@@ -103,7 +109,7 @@ const CropperInput: React.FC<IProps> = ({ defaultImg, setCroppie, croppie }) => 
           <StyledButtonsWrapper>
             <Icon
               icon={removeIcon}
-              size={64}
+              size={56}
               type="button"
               onClick={() => {
                 croppie.setZoom(croppie._currentZoom - 0.01);
@@ -111,7 +117,7 @@ const CropperInput: React.FC<IProps> = ({ defaultImg, setCroppie, croppie }) => 
             />
             <Icon
               icon={addIcon}
-              size={64}
+              size={56}
               type="button"
               onClick={() => {
                 croppie.setZoom(croppie._currentZoom + 0.01);

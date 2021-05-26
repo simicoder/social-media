@@ -10,6 +10,7 @@ import TextInput from '../../atoms/TextInput/TextInput';
 import Button from '../../atoms/Button/Button';
 import profileIcon from '../../../assets/Icons/profileIcon.svg';
 import CropperInput from '../../molecules/CropperInput/CropperInput';
+import Error from '../../atoms/Error/Error';
 
 const StyledForm = styled.form`
   display: flex;
@@ -41,7 +42,9 @@ const initialState = {
 const AuthForm = () => {
   const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
+  const [error, setError] = useState('');
   const dispatch = useDispatch();
+
   const history = useHistory();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -53,6 +56,41 @@ const AuthForm = () => {
     setForm(initialState);
     setIsSignup((prevIsSignup) => !prevIsSignup);
     setShowPassword(false);
+    setError('');
+  };
+
+  const validate = () => {
+    if (isSignup) {
+      if (!form.email && !form.password && !form.confirmPassword && !form.username) {
+        setError('Please complete all fields');
+        return false;
+      }
+
+      if (form.password != form.confirmPassword) {
+        setError('The provided passwords do not match');
+        return false;
+      }
+
+      if (croppie == null) {
+        setError('Add profile image');
+        return false;
+      }
+    } else if (!form.email && !form.password) {
+      setError('Please complete all fields');
+      return false;
+    }
+
+    if (!form.email.includes('@') && !form.email.includes('.')) {
+      setError('Please check your email');
+      return false;
+    }
+
+    if (!(form.password.length >= 8) && !/\d/.test(form.password)) {
+      setError('Password must be at least 8 characters long and contain numbers');
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = (e: React.SyntheticEvent) => {
@@ -61,41 +99,48 @@ const AuthForm = () => {
     formData.append('email', form.email);
     formData.append('password', form.password);
 
-    if (isSignup) {
-      if (croppie !== null) {
-        croppie
-          .result({
-            type: 'blob',
-            size: {
-              width: 480,
-              height: 480,
-            },
-          })
-          .then((blob: Blob) => {
-            formData.append('username', form.username);
-            formData.append('confirmPassword', form.confirmPassword);
-            formData.append('selectedFile', blob);
-            dispatch(signup(formData, history));
-            history.push('/');
-          });
+    if (validate()) {
+      if (isSignup) {
+        if (croppie !== null) {
+          croppie
+            .result({
+              type: 'blob',
+              size: {
+                width: 480,
+                height: 480,
+              },
+            })
+            .then((blob: Blob) => {
+              formData.append('username', form.username);
+              formData.append('confirmPassword', form.confirmPassword);
+              formData.append('selectedFile', blob);
+              try {
+                dispatch(signup(formData, history));
+              } catch (err) {
+                console.log(err);
+                setError(err.message);
+              }
+              history.push('/');
+            });
+        }
+      } else {
+        dispatch(signin(formData, history));
       }
-    } else {
-      dispatch(signin(formData, history));
     }
   };
 
-  const googleSuccess = async (res) => {
-    const result = res?.profileObj;
-    const token = res?.tokenId;
+  // const googleSuccess = async (res) => {
+  //   const result = res?.profileObj;
+  //   const token = res?.tokenId;
 
-    try {
-      dispatch({ type: AUTH, data: { result, token } });
+  //   try {
+  //     dispatch({ type: AUTH, data: { result, token } });
 
-      history.push('/');
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     history.push('/');
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const googleError = () => console.log('Google Sign In was unsuccessful. Try again later');
 
@@ -111,6 +156,7 @@ const AuthForm = () => {
         encType="multipart/form-data"
       >
         <h1>{isSignup ? 'Sign up' : 'Sign in'}</h1>
+        {error && <Error>{error}</Error>}
         {isSignup && (
           <TextInput placeholder="username" name="username" onChange={handleChange} required />
         )}

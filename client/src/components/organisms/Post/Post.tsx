@@ -69,14 +69,12 @@ const StyledHeaderContainer = styled.div`
 `;
 
 const StyledLikeButtonContainer = styled.div`
-  background: #5a5a5a;
   border: none;
-  border-radius: 10px;
   height: 50px;
   display: flex;
   align-items: center;
   color: #a0a0a0;
-  padding: 5px;
+  padding: 0 5px 0 5px;
   margin: 2px;
 `;
 
