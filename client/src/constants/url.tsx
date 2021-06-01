@@ -1,3 +1,3 @@
-export const hostUrl = 'http://localhost:5000/';
-export const imageUrl = 'http://localhost:5000/files/';
-export const profileImageUrl = 'http://localhost:5000/files/profile/';
+export const hostUrl = 'https://simi-social-media.herokuapp.com/';
+export const imageUrl = 'https://simi-social-media.herokuapp.com/files/';
+export const profileImageUrl = 'https://simi-social-media.herokuapp.com/files/profile/';
