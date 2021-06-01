@@ -5,6 +5,7 @@ export const theme = {
   active: '#686767',
   error: '#e22a2a',
   color: 'white',
+  lightColor: '#a0a0a0',
   light: 300,
   bold: 600,
   fontSize: {

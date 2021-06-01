@@ -27,7 +27,7 @@ export const signin = async (req: Request, res: Response) => {
 };
 
 export const signup = async (req: Request, res: Response) => {
-  const { email, password, username } = req.body;
+  const { email, password, name } = req.body;
 
   const selectedFile = req.file.filename;
 
@@ -41,7 +41,7 @@ export const signup = async (req: Request, res: Response) => {
     const result = await UserModal.create({
       email,
       password: hashedPassword,
-      username,
+      name,
       selectedFile,
     });
 

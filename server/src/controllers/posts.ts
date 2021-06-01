@@ -30,7 +30,7 @@ export const searchPosts = async (req: Request, res: Response) => {
 };
 
 export const createPost = async (req: Request, res: Response) => {
-  const { title, description, creatorName } = req.body;
+  const { title, description, creatorName, creatorImage } = req.body;
   const selectedFile = req.file.filename;
   const creator = (req as any).userId;
 
@@ -40,6 +40,7 @@ export const createPost = async (req: Request, res: Response) => {
     creatorName,
     creator,
     selectedFile,
+    creatorImage,
     createdAt: new Date().toISOString(),
   });
 
@@ -54,7 +55,7 @@ export const createPost = async (req: Request, res: Response) => {
 
 export const updatePost = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { title, description, creatorName } = req.body;
+  const { title, description, creatorName, creatorImage } = req.body;
   const selectedFile = req.file.filename;
   const creator = (req as any).userId;
 
@@ -62,7 +63,7 @@ export const updatePost = async (req: Request, res: Response) => {
 
   await Post.findByIdAndUpdate(
     id,
-    { title, description, creator, creatorName, selectedFile, _id: id },
+    { title, description, creator, creatorName, creatorImage, selectedFile, _id: id },
     { new: true },
   );
 
@@ -73,7 +74,7 @@ export const updatePost = async (req: Request, res: Response) => {
 
 export const commentPost = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { text, creatorName } = req.body;
+  const { text, creatorName, creatorImage } = req.body;
   const creator = (req as any).userId;
 
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
@@ -84,6 +85,7 @@ export const commentPost = async (req: Request, res: Response) => {
     text,
     creator,
     creatorName,
+    creatorImage,
   };
 
   (post as IPost).comments.unshift(newComment);

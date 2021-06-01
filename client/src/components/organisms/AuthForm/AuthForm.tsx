@@ -31,7 +31,7 @@ const StyledForm = styled.form`
 `;
 
 const initialState = {
-  username: '',
+  name: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -61,7 +61,7 @@ const AuthForm = () => {
 
   const validate = () => {
     if (isSignup) {
-      if (!form.email && !form.password && !form.confirmPassword && !form.username) {
+      if (!form.email && !form.password && !form.confirmPassword && !form.name) {
         setError('Please complete all fields');
         return false;
       }
@@ -111,7 +111,7 @@ const AuthForm = () => {
               },
             })
             .then((blob: Blob) => {
-              formData.append('username', form.username);
+              formData.append('name', form.name);
               formData.append('confirmPassword', form.confirmPassword);
               formData.append('selectedFile', blob);
               try {
@@ -127,18 +127,18 @@ const AuthForm = () => {
     }
   };
 
-  // const googleSuccess = async (res) => {
-  //   const result = res?.profileObj;
-  //   const token = res?.tokenId;
+  const googleSuccess = async (res) => {
+    const result = res?.profileObj;
+    const token = res?.tokenId;
 
-  //   try {
-  //     dispatch({ type: AUTH, data: { result, token } });
+    try {
+      dispatch({ type: AUTH, data: { result, token } });
 
-  //     history.push('/');
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+      history.push('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const googleError = () => console.log('Google Sign In was unsuccessful. Try again later');
 
@@ -155,9 +155,7 @@ const AuthForm = () => {
       >
         <h1>{isSignup ? 'Sign up' : 'Sign in'}</h1>
         {error && <Error>{error}</Error>}
-        {isSignup && (
-          <TextInput placeholder="username" name="username" onChange={handleChange} required />
-        )}
+        {isSignup && <TextInput placeholder="name" name="name" onChange={handleChange} required />}
         <TextInput placeholder="email" name="email" onChange={handleChange} type="email" required />
         <TextInput
           placeholder="password"
@@ -181,8 +179,8 @@ const AuthForm = () => {
           <CropperInput defaultImg={profileIcon} setCroppie={setCroppie} croppie={croppie} />
         )}
         <Button type="submit">{isSignup ? 'Sign Up' : 'Sign In'}</Button>
-        {/* <GoogleLogin
-          clientId="564033717568-e5p23rhvcs4i6kffgsbci1d64r8hp6fn.apps.googleusercontent.com"
+        <GoogleLogin
+          clientId="460129690206-sv9i6vkok7kvbgha43s56nrke7sqe3km.apps.googleusercontent.com"
           render={(renderProps) => (
             <Button onClick={renderProps.onClick} disabled={renderProps.disabled}>
               Google Sign In
@@ -191,7 +189,7 @@ const AuthForm = () => {
           onSuccess={googleSuccess}
           onFailure={googleError}
           cookiePolicy="single_host_origin"
-        /> */}
+        />
       </StyledForm>
       <div onClick={switchMode}>
         {isSignup ? (

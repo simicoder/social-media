@@ -40,9 +40,10 @@ const CommentBar: React.FC<IProps> = ({ id }) => {
     const text = e.target.text.value;
 
     if (text) {
-      const creatorName = user.result.username;
+      const creatorName = user.result.name;
+      const creatorImage = user.result.imageUrl;
 
-      dispatch(commentPost(id, { text, creatorName }));
+      dispatch(commentPost(id, { text, creatorName, creatorImage }));
       e.target.text.value = '';
     }
   };

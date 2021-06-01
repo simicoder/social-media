@@ -73,7 +73,7 @@ const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) =>
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    if (croppie !== null && postData.title && user.result.username) {
+    if (croppie !== null && postData.title && user.result.name) {
       croppie
         .result({
           type: 'blob',
@@ -86,7 +86,8 @@ const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) =>
           const formData = new FormData();
           formData.append('title', postData.title);
           formData.append('description', postData.description);
-          formData.append('creatorName', user.result.username);
+          formData.append('creatorName', user.result.name);
+          formData.append('creatorImage', user.result.imageUrl);
           formData.append('selectedFile', blob);
           if (currentId === 0) {
             dispatch(createPost(formData));
@@ -102,7 +103,7 @@ const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) =>
     }
   };
 
-  if (!user?.result.username) {
+  if (!user?.result.name) {
     return (
       <div>
         <h1>Please Sign In to publish data</h1>

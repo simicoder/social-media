@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { likePost, deletePost } from '../../../actions/posts';
 import LikeIcon from '../../atoms/LikeIcon/LikeIcon';
 import Button from '../../atoms/Button/Button';
-import { hostUrl } from '../../../constants/url';
+import { profileImageUrl, imageUrl } from '../../../constants/url';
 import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
 import CommentForm from '../../molecules/CommentForm/CommentForm';
 import Comments from '../../molecules/Comments/Comments';
@@ -73,7 +73,7 @@ const StyledLikeButtonContainer = styled.div`
   height: 50px;
   display: flex;
   align-items: center;
-  color: #a0a0a0;
+  color: ${({ theme }) => theme.lightColor};
   padding: 0 5px 0 5px;
   margin: 2px;
 `;
@@ -104,6 +104,7 @@ export interface IPost {
   description: string;
   creatorName: string;
   creator: string;
+  creatorImage: string;
   selectedFile: Blob;
   createdAt: string;
   likes: Array<string>;
@@ -151,13 +152,18 @@ const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
     <StyledWrapper>
       <StyledHeaderContainer>
         <StyledCreatorContainer>
-          <ProfileImage alt="avatar" src={`${hostUrl}profile/${post.creator}`} />
+          <ProfileImage
+            alt="avatar"
+            src={
+              post.creatorImage != 'undefined' ? post.creatorImage : profileImageUrl + post.creator
+            }
+          />
           <StyledCreatorTag>{post.creatorName}</StyledCreatorTag>
         </StyledCreatorContainer>
         <p>{moment(post.createdAt).fromNow()}</p>
       </StyledHeaderContainer>
 
-      <StyledImg src={hostUrl + post.selectedFile} />
+      <StyledImg src={imageUrl + post.selectedFile} />
 
       <StyledTitleContainer>
         <StyledTitle>{post.title}</StyledTitle>
