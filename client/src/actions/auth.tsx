@@ -3,7 +3,7 @@ import { AUTH } from '../constants/actionTypes';
 import * as api from '../api/index';
 
 export const signin =
-  (formData: FormData, router: RouteComponentProps['history']) =>
+  (formData: FormData, router: RouteComponentProps['history'], setError: Function) =>
   async (dispatch: (arg0: { type: string; data: string }) => void) => {
     try {
       const { data } = await api.signIn(formData);
@@ -12,12 +12,12 @@ export const signin =
 
       router.push('/');
     } catch (error) {
-      console.log('error');
+      setError('invalid data');
     }
   };
 
 export const signup =
-  (formData: FormData, router: RouteComponentProps['history']) =>
+  (formData: FormData, router: RouteComponentProps['history'], setError: Function) =>
   async (dispatch: (arg0: { type: string; data: string }) => void) => {
     try {
       const { data } = await api.signUp(formData);
@@ -26,6 +26,6 @@ export const signup =
 
       router.push('/');
     } catch (error) {
-      console.log(error);
+      setError('User already exists');
     }
   };

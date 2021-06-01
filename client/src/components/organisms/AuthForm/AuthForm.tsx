@@ -115,16 +115,14 @@ const AuthForm = () => {
               formData.append('confirmPassword', form.confirmPassword);
               formData.append('selectedFile', blob);
               try {
-                dispatch(signup(formData, history));
+                dispatch(signup(formData, history, setError));
               } catch (err) {
-                console.log(err);
                 setError(err.message);
               }
-              history.push('/');
             });
         }
       } else {
-        dispatch(signin(formData, history));
+        dispatch(signin(formData, history, setError));
       }
     }
   };
