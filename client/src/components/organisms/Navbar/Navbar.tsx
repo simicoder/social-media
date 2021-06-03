@@ -4,7 +4,6 @@ import { NavLink, Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LogoIcon from '../../../assets/Icons/LogoIcon.png';
 import Button from '../../atoms/Button/Button';
-import { imageUrl } from '../../../constants/url';
 import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
 import MenuButton from '../../atoms/MenuButton/MenuButton';
 import SearchBar from '../../molecules/SearchBar/SearchBar';
@@ -114,11 +113,7 @@ const Navbar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
             {user?.result ? (
               <>
                 <Button onClick={logout}>Logout</Button>
-                <ProfileImage
-                  width="40px"
-                  alt="avatar"
-                  src={user?.result.imageUrl || imageUrl + user?.result.selectedFile}
-                />
+                <ProfileImage width="40px" alt="avatar" src={user?.result.imageUrl} />
               </>
             ) : (
               <Link to="/auth">

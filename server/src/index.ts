@@ -4,7 +4,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import postRoutes from './routes/posts';
 import userRouter from './routes/user';
-import fileRouter from './routes/files';
 
 const app = express();
 
@@ -16,7 +15,6 @@ app.use(express.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
 app.use('/posts', postRoutes);
-app.use('/files', fileRouter);
 app.use('/user', userRouter);
 
 const CONNECTION_URL = process.env.CONNECTION_URL as string;

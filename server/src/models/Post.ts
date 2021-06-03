@@ -10,13 +10,15 @@ export interface IPost extends Document {
   likes: string[];
   createdAt: Date;
   comments: string[];
+  cloudinaryId: string;
 }
 
 const postSchema = new mongoose.Schema({
   title: String,
   description: String,
   creatorName: String,
-  selectedFile: String,
+  selectedFile: { type: String, required: true },
+  cloudinaryId: { type: String, required: true },
   creatorImage: { type: String, default: '' },
   creator: String,
   likes: { type: [String], default: [] },
@@ -25,7 +27,7 @@ const postSchema = new mongoose.Schema({
     {
       text: String,
       created: { type: Date, default: Date.now },
-      creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      creator: String,
       creatorName: String,
       creatorImage: { type: String, default: '' },
     },

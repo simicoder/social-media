@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-
+import cloudinary from '../middleware/cloudinary';
 import UserModal from '../models/User';
 
 const secret = 'test';
@@ -29,7 +29,9 @@ export const signin = async (req: Request, res: Response) => {
 export const signup = async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
 
-  const selectedFile = req.file.filename;
+  const cloudinaryResult = await cloudinary.uploader.upload(req.file.path);
+  const imageUrl = cloudinaryResult.secure_url;
+  const cloudinaryId = cloudinaryResult.public_id;
 
   try {
     const oldUser = await UserModal.findOne({ email });
@@ -42,7 +44,8 @@ export const signup = async (req: Request, res: Response) => {
       email,
       password: hashedPassword,
       name,
-      selectedFile,
+      imageUrl,
+      cloudinaryId,
     });
 
     const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: '1h' });

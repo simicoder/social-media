@@ -5,7 +5,8 @@ export interface IUser extends Document {
   email: string;
   password: string;
   id: string;
-  selectedFile: string;
+  imageUrl: string;
+  cloudinaryId: string;
 }
 
 const userSchema = new mongoose.Schema({
@@ -13,7 +14,8 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   id: { type: String },
-  selectedFile: { type: String, required: true },
+  imageUrl: { type: String, required: true },
+  cloudinaryId: { type: String, required: true },
 });
 
 export default mongoose.model<IUser>('User', userSchema);

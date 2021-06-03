@@ -105,7 +105,7 @@ export interface IPost {
   creatorName: string;
   creator: string;
   creatorImage: string;
-  selectedFile: Blob;
+  selectedFile: string;
   createdAt: string;
   likes: Array<string>;
   _id: number;
@@ -152,18 +152,13 @@ const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
     <StyledWrapper>
       <StyledHeaderContainer>
         <StyledCreatorContainer>
-          <ProfileImage
-            alt="avatar"
-            src={
-              post.creatorImage != 'undefined' ? post.creatorImage : profileImageUrl + post.creator
-            }
-          />
+          <ProfileImage alt="avatar" src={post.creatorImage} />
           <StyledCreatorTag>{post.creatorName}</StyledCreatorTag>
         </StyledCreatorContainer>
         <p>{moment(post.createdAt).fromNow()}</p>
       </StyledHeaderContainer>
 
-      <StyledImg src={imageUrl + post.selectedFile} />
+      <StyledImg src={post.selectedFile} />
 
       <StyledTitleContainer>
         <StyledTitle>{post.title}</StyledTitle>

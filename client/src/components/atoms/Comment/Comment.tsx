@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { IComments } from '../../molecules/Comments/Comments';
 import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
-import { profileImageUrl } from '../../../constants/url';
 import Paragraph from '../Paragraph/Paragraph';
 
 const StyledWrapper = styled.div`
@@ -36,10 +35,7 @@ type IProps = {
 
 const Comment: React.FC<IProps> = ({ comment }) => (
   <StyledWrapper>
-    <ProfileImage
-      alt="avatar"
-      src={comment.creatorImage ? comment.creatorImage : profileImageUrl + comment.creator}
-    />
+    <ProfileImage alt="avatar" src={comment.creatorImage} />
     <StyledContainer>
       <b>{comment.creatorName}</b>
       <Paragraph>{comment.text}</Paragraph>

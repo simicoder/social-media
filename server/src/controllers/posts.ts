@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import fs from 'fs';
 import { IPost } from '../models/Post';
+import cloudinary from '../middleware/cloudinary';
 
 import Post from '../models/Post';
 
@@ -31,8 +31,10 @@ export const searchPosts = async (req: Request, res: Response) => {
 
 export const createPost = async (req: Request, res: Response) => {
   const { title, description, creatorName, creatorImage } = req.body;
-  const selectedFile = req.file.filename;
   const creator = (req as any).userId;
+  const cloudinaryResult = await cloudinary.uploader.upload(req.file.path);
+  const selectedFile = cloudinaryResult.secure_url;
+  const cloudinaryId = cloudinaryResult.public_id;
 
   const newPost = new Post({
     title,
@@ -40,6 +42,7 @@ export const createPost = async (req: Request, res: Response) => {
     creatorName,
     creator,
     selectedFile,
+    cloudinaryId,
     creatorImage,
     createdAt: new Date().toISOString(),
   });
@@ -56,14 +59,19 @@ export const createPost = async (req: Request, res: Response) => {
 export const updatePost = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { title, description, creatorName, creatorImage } = req.body;
-  const selectedFile = req.file.filename;
   const creator = (req as any).userId;
+  const cloudinaryResult = await cloudinary.uploader.upload(req.file.path);
+  const selectedFile = cloudinaryResult.secure_url;
+  const cloudinaryId = cloudinaryResult.public_id;
 
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
+  const post = await Post.findById(id);
+  await cloudinary.uploader.destroy((post as any).cloudinaryId);
+
   await Post.findByIdAndUpdate(
     id,
-    { title, description, creator, creatorName, creatorImage, selectedFile, _id: id },
+    { title, description, creator, creatorName, creatorImage, selectedFile, cloudinaryId, _id: id },
     { new: true },
   );
 
@@ -99,14 +107,15 @@ export const deletePost = async (req: Request, res: Response) => {
 
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
+  const post = await Post.findById(id);
+
   try {
-    fs.unlinkSync('./uploads/' + (await (Post.findById(id) as any)).toJSON().selectedFile);
+    await cloudinary.uploader.destroy((post as any).cloudinaryId);
+    await Post.findByIdAndRemove(id);
     res.json({ description: 'Post deleted successfully.' });
   } catch (err) {
     console.error(err);
   }
-
-  await Post.findByIdAndRemove(id);
 };
 
 export const likePost = async (req: Request, res: Response) => {
