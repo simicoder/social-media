@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { likePost, deletePost } from '../../../actions/posts';
 import LikeIcon from '../../atoms/LikeIcon/LikeIcon';
 import Button from '../../atoms/Button/Button';
-import { profileImageUrl, imageUrl } from '../../../constants/url';
 import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
 import CommentForm from '../../molecules/CommentForm/CommentForm';
 import Comments from '../../molecules/Comments/Comments';
