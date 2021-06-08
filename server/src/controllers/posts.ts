@@ -21,9 +21,9 @@ export const searchPosts = async (req: Request, res: Response) => {
   const { text } = req.params;
 
   try {
-    const Posts = await Post.find({ title: text });
+    const posts = await Post.find({ $text: { $search: text } });
 
-    res.status(200).json(Posts);
+    res.status(200).json(posts);
   } catch (error) {
     res.status(404).json({ description: error.description });
   }
