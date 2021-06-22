@@ -155,29 +155,30 @@ const AuthForm = () => {
       >
         <h1>{isSignup ? 'Sign up' : 'Sign in'}</h1>
         {error && <Error>{error}</Error>}
-        {isSignup && <TextInput placeholder="name" name="name" onChange={handleChange} required />}
-        <TextInput placeholder="email" name="email" onChange={handleChange} type="email" required />
+        {isSignup && <TextInput label="name" name="name" onChange={handleChange} />}
+        <TextInput label="email" name="email" onChange={handleChange} type="email" />
         <TextInput
-          placeholder="password"
+          label="password"
           name="password"
           onChange={handleChange}
-          type="password"
-          required
+          type={showPassword ? 'text' : 'password'}
         />
         {isSignup && (
           <>
             <TextInput
-              placeholder="password"
+              label="password"
               name="confirmPassword"
               onChange={handleChange}
-              type="password"
-              required
+              type={showPassword ? 'text' : 'password'}
             />
           </>
         )}
         {isSignup && (
           <CropperInput defaultImg={profileIcon} setCroppie={setCroppie} croppie={croppie} />
         )}
+        <Button type="button" onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? 'Hide password' : 'Show Passoword'}
+        </Button>
         <Button type="submit">{isSignup ? 'Sign Up' : 'Sign In'}</Button>
         <GoogleLogin
           clientId="460129690206-sv9i6vkok7kvbgha43s56nrke7sqe3km.apps.googleusercontent.com"
@@ -191,6 +192,7 @@ const AuthForm = () => {
           cookiePolicy="single_host_origin"
         />
       </StyledForm>
+
       <div onClick={switchMode}>
         {isSignup ? (
           <>

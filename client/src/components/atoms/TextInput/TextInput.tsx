@@ -1,50 +1,91 @@
+import React from 'react';
 import styled from 'styled-components';
 
-const TextInput = styled.input`
-  font-family: inherit;
+const Wrapper = styled.div`
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
   width: 90%;
+`;
+
+const StyledLabel = styled.label`
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: ${({ theme }) => theme.color};
+`;
+
+const StyledInput = styled.input`
+  font-family: inherit;
+  width: 100%;
   border: 0;
-  border-bottom: 2px solid grey;
+  border-bottom: 2px solid ${({ theme }) => theme.button};
   outline: 0;
   font-size: 1.3rem;
-  color: white;
-  padding: 10px 0;
+  color: ${({ theme }) => theme.color};
+  padding: 7px 0;
   background: transparent;
-  transition: all 0.2s;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }
 
   :focus {
+    ~ .label {
+      position: absolute;
+      top: 0;
+      display: block;
+      transition: 0.2s;
+      font-size: 1rem;
+      color: ${({ theme }) => theme.lightColor};
+      font-weight: 700;
+    }
+    padding-bottom: 6px;
     font-weight: 700;
     border-width: 3px;
-    border-image: #3d5553;
+    border-image: ${({ theme }) => theme.lightColor};
     border-image-slice: 1;
-    transform: scale(1.05);
   }
 
-  ::placeholder {
-    color: #fff;
-    opacity: 1;
-  }
-
-  :-ms-input-placeholder {
-    color: #fff;
-  }
-
-  ::-ms-input-placeholder {
-    color: #fff;
-  }
-
-  :-webkit-autofill,
-  :-webkit-autofill:hover,
-  :-webkit-autofill:focus,
-  :-webkit-autofill,
-  :-webkit-autofill:hover,
-  :-webkit-autofill:focus,
-  :-webkit-autofill,
-  :-webkit-autofill:hover,
-  :-webkit-autofill:focus {
-    -webkit-text-fill-color: white;
-    transition: background-color 5000s ease-in-out 0s;
+  &:required,
+  &:invalid {
+    box-shadow: none;
   }
 `;
+
+type Props = {
+  label: string;
+  name: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  type?: string;
+  maxLength?: number;
+  value?: string;
+};
+
+const TextInput: React.FC<Props> = ({ label, name, onChange, type, maxLength, value }) => (
+  <Wrapper>
+    <StyledInput
+      placeholder={label}
+      name={name}
+      onChange={onChange}
+      maxLength={maxLength}
+      type={type}
+      value={value}
+      required
+    />
+    <StyledLabel className="label" htmlFor={name}>
+      {label}
+    </StyledLabel>
+  </Wrapper>
+);
 
 export default TextInput;

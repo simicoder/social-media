@@ -118,10 +118,9 @@ const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) =>
         type="text"
         maxLength={25}
         name="title"
-        placeholder="title"
+        label="title"
         value={postData.title}
         onChange={(e) => setPostData({ ...postData, title: e.target.value })}
-        required
       />
       <Textarea
         name="description"

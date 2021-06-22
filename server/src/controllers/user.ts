@@ -29,7 +29,7 @@ export const signin = async (req: Request, res: Response) => {
 export const signup = async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
 
-  const cloudinaryResult = await cloudinary.uploader.upload(req.file.path);
+  const cloudinaryResult = await cloudinary.uploader.upload((req as any).file.path);
   const imageUrl = cloudinaryResult.secure_url;
   const cloudinaryId = cloudinaryResult.public_id;
 

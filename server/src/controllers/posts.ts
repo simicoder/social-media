@@ -32,7 +32,7 @@ export const searchPosts = async (req: Request, res: Response) => {
 export const createPost = async (req: Request, res: Response) => {
   const { title, description, creatorName, creatorImage } = req.body;
   const creator = (req as any).userId;
-  const cloudinaryResult = await cloudinary.uploader.upload(req.file.path);
+  const cloudinaryResult = await cloudinary.uploader.upload((req as any).file.path);
   const selectedFile = cloudinaryResult.secure_url;
   const cloudinaryId = cloudinaryResult.public_id;
 
@@ -60,7 +60,7 @@ export const updatePost = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { title, description, creatorName, creatorImage } = req.body;
   const creator = (req as any).userId;
-  const cloudinaryResult = await cloudinary.uploader.upload(req.file.path);
+  const cloudinaryResult = await cloudinary.uploader.upload((req as any).file.path);
   const selectedFile = cloudinaryResult.secure_url;
   const cloudinaryId = cloudinaryResult.public_id;
 
