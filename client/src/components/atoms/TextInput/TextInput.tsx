@@ -81,8 +81,9 @@ const TextInput: React.FC<Props> = ({ label, name, onChange, type, maxLength, va
       type={type}
       value={value}
       required
+      data-testid="input"
     />
-    <StyledLabel className="label" htmlFor={name}>
+    <StyledLabel className="label" htmlFor={name} data-testid="label">
       {label}
     </StyledLabel>
   </Wrapper>
