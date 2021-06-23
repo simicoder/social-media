@@ -30,7 +30,7 @@ interface IProps {
   id: number;
 }
 
-const CommentBar: React.FC<IProps> = ({ id }) => {
+const CommentForm: React.FC<IProps> = ({ id }) => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile')!);
 
@@ -50,10 +50,10 @@ const CommentBar: React.FC<IProps> = ({ id }) => {
 
   return (
     <StyledForm onSubmit={HandleSubmit} noValidate autoComplete="off">
-      <StyledInput name="text" placeholder="Comment" />
-      <Icon icon={sendIcon} size={35} />
+      <StyledInput name="text" placeholder="Comment" required />
+      <Icon type="submit" icon={sendIcon} size={35} />
     </StyledForm>
   );
 };
 
-export default CommentBar;
+export default CommentForm;
