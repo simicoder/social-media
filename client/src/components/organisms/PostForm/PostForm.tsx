@@ -129,7 +129,7 @@ const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) =>
         onChange={(e) => setPostData({ ...postData, description: e.target.value })}
       />
       <CropperInput
-        defaultImg={currentId ? hostUrl + post.selectedFile : uploadFileIcon}
+        defaultImg={currentId ? post.selectedFile : uploadFileIcon}
         setCroppie={setCroppie}
         croppie={croppie}
       />
