@@ -90,6 +90,7 @@ const StyledCreatorTag = styled.div`
   display: flex;
   justify-content: start;
   margin-left: 10px;
+  margin-right: 10px;
 `;
 
 interface IProps {
