@@ -1,6 +1,13 @@
 import * as actionType from '../constants/actionTypes';
 
-const authReducer = (state = { authData: null }, action: { type: string; data: FormData }) => {
+interface IState {
+  authData: FormData | null | undefined;
+}
+
+const authReducer = (
+  state: IState = { authData: null },
+  action: { type: string; data?: FormData },
+) => {
   switch (action.type) {
     case actionType.AUTH:
       localStorage.setItem('profile', JSON.stringify({ ...action?.data }));

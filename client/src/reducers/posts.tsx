@@ -1,7 +1,19 @@
 import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 import { IPost } from '../components/organisms/Post/Post';
 
-export default (posts = [], action: { type: string; payload: { _id: number } & number }) => {
+interface IAction {
+  type: string;
+  payload: IPost;
+}
+
+interface IActionDelete {
+  type: typeof DELETE;
+  payload: number;
+}
+
+type Action = IAction | IActionDelete;
+
+export default (posts = [], action: Action) => {
   switch (action.type) {
     case FETCH_ALL:
       return action.payload;
