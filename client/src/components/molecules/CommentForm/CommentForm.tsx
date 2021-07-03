@@ -26,15 +26,26 @@ const StyledInput = styled.input`
   }
 `;
 
+interface IPropsForm {
+  handleSubmit: React.FormEventHandler<HTMLFormElement>;
+}
+
 interface IProps {
   id: number;
 }
+
+export const Form: React.FC<IPropsForm> = ({ handleSubmit }) => (
+  <StyledForm onSubmit={handleSubmit} noValidate autoComplete="off">
+    <StyledInput data-testid="input" name="text" placeholder="Comment" required />
+    <Icon data-testid="submit" type="submit" icon={sendIcon} size={35} />
+  </StyledForm>
+);
 
 const CommentForm: React.FC<IProps> = ({ id }) => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile')!);
 
-  const HandleSubmit = async (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     const text = e.target.text.value;
@@ -48,12 +59,7 @@ const CommentForm: React.FC<IProps> = ({ id }) => {
     }
   };
 
-  return (
-    <StyledForm onSubmit={HandleSubmit} noValidate autoComplete="off">
-      <StyledInput name="text" placeholder="Comment" required />
-      <Icon type="submit" icon={sendIcon} size={35} />
-    </StyledForm>
-  );
+  return <Form handleSubmit={handleSubmit} />;
 };
 
 export default CommentForm;

@@ -46,8 +46,8 @@ const CommentBar: React.FC<IProps> = ({ comments }) => {
 
   return (
     <StyledWrapper>
-      {comments.map((comment) => (
-        <Comment comment={comment} />
+      {comments.map((comment, i) => (
+        <Comment key={i} comment={comment} />
       ))}
     </StyledWrapper>
   );

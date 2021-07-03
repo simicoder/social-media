@@ -46,60 +46,25 @@ const StyledImageCropper = styled.div`
   margin-top: 20px;
 `;
 
-interface IProps {
+interface IPropsInput {
+  handleImage: React.ChangeEventHandler<HTMLInputElement>;
+  croppie: any;
+  data: IData;
+}
+
+interface IData {
+  selectedFile: Blob;
+  urlSelectedFile: string;
+}
+
+interface IPropsCropperInput {
   defaultImg: string;
   setCroppie: Function;
   croppie: any;
 }
 
-const CropperInput: React.FC<IProps> = ({ defaultImg, setCroppie, croppie }) => {
-  const initialState = {
-    selectedFile: new Blob(),
-    urlSelectedFile: defaultImg,
-  };
-
+export const Input: React.FC<IPropsInput> = ({ handleImage, croppie, data }) => {
   const fileInput = useRef<HTMLInputElement>(null);
-
-  const windowWidth = useWindowWidth();
-
-  const [data, setData] = useState(initialState);
-
-  const handleImage = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    const target = e.target as typeof e.target & {
-      files: Array<Blob>;
-    };
-    if (target.files[0]) {
-      const oFReader = new FileReader();
-      oFReader.readAsDataURL(target.files[0]);
-
-      oFReader.onload = (oFREvent: any) => {
-        setData({
-          selectedFile: target.files[0],
-          urlSelectedFile: oFREvent.target.result,
-        });
-
-        const el = document.getElementById('imageCropper');
-        if (el) {
-          const croppieInstance: any = new Croppie(el, {
-            enableExif: true,
-            viewport: {
-              height: windowWidth < 1024 ? 170 : 400,
-              width: windowWidth < 1024 ? 170 : 400,
-            },
-            boundary: {
-              height: windowWidth < 1024 ? 270 : 440,
-              width: windowWidth < 1024 ? 270 : 440,
-            },
-          });
-          croppieInstance.bind({
-            url: oFREvent.target.result,
-          });
-          setCroppie(croppieInstance);
-        }
-      };
-    }
-  };
 
   return (
     <>
@@ -133,6 +98,7 @@ const CropperInput: React.FC<IProps> = ({ defaultImg, setCroppie, croppie }) => 
         >
           <StyledImg src={data.urlSelectedFile} />
           <StyledFileInput
+            data-testid="input"
             ref={fileInput}
             type="file"
             required
@@ -145,4 +111,55 @@ const CropperInput: React.FC<IProps> = ({ defaultImg, setCroppie, croppie }) => 
     </>
   );
 };
+
+const CropperInput: React.FC<IPropsCropperInput> = ({ defaultImg, setCroppie, croppie }) => {
+  const windowWidth = useWindowWidth();
+
+  const initialState = {
+    selectedFile: new Blob(),
+    urlSelectedFile: defaultImg,
+  };
+
+  const [data, setData] = useState(initialState);
+
+  const handleImage = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const target = e.target as typeof e.target & {
+      files: Array<Blob>;
+    };
+    if (target.files[0]) {
+      const oFReader = new FileReader();
+      oFReader.readAsDataURL(target.files[0]);
+
+      oFReader.onload = (oFREvent: any) => {
+        setData({
+          selectedFile: target.files[0],
+          urlSelectedFile: oFREvent.target.result,
+        });
+
+        const el = document.getElementById('imageCropper');
+        if (el) {
+          const croppieInstance: any = new Croppie(el, {
+            enableExif: true,
+            viewport: {
+              height: windowWidth < 1024 ? 240 : 400,
+              width: windowWidth < 1024 ? 240 : 400,
+            },
+            boundary: {
+              height: windowWidth < 1024 ? 270 : 440,
+              width: windowWidth < 1024 ? 270 : 440,
+            },
+          });
+          croppieInstance.bind({
+            url: oFREvent.target.result,
+          });
+          setCroppie(croppieInstance);
+        }
+      };
+    }
+  };
+
+  return <Input handleImage={handleImage} croppie={croppie} data={data} />;
+};
+
 export default CropperInput;

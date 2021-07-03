@@ -25,22 +25,28 @@ const StyledInput = styled.input`
   }
 `;
 
+interface IProps {
+  handleSubmit: React.FormEventHandler<HTMLFormElement>;
+}
+
+export const SearchForm: React.FC<IProps> = ({ handleSubmit }) => (
+  <StyledForm onSubmit={handleSubmit} noValidate autoComplete="off">
+    <StyledInput data-testid="input" name="text" placeholder="Search" />
+    <SearchButton />
+  </StyledForm>
+);
+
 const SearchBar: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const HandleSubmit = async (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     history.push('/search');
     dispatch(searchPosts(e.target.text.value));
   };
 
-  return (
-    <StyledForm onSubmit={HandleSubmit} noValidate autoComplete="off">
-      <StyledInput name="text" placeholder="Search" />
-      <SearchButton />
-    </StyledForm>
-  );
+  return <SearchForm handleSubmit={handleSubmit} />;
 };
 
 export default SearchBar;

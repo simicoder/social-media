@@ -26,7 +26,7 @@ const StyledIcon = styled.div`
 `;
 
 const SearchButton = () => (
-  <StyledButton>
+  <StyledButton data-testid="submit">
     Search
     <StyledIcon />
   </StyledButton>
