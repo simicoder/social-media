@@ -24,7 +24,6 @@ const StyledForm = styled.form`
   border-radius: 10px;
   box-sizing: border-box;
   margin-top: 20px;
-
   @media only screen and (max-width: 750px) {
     width: 90%;
   }
@@ -48,7 +47,6 @@ const AuthForm = () => {
   const history = useHistory();
 
   const [showPassword, setShowPassword] = useState(false);
-  const handleShowPassword = () => setShowPassword(!showPassword);
 
   const [croppie, setCroppie] = useState<Croppie | null>(null);
 
@@ -114,15 +112,18 @@ const AuthForm = () => {
               formData.append('name', form.name);
               formData.append('confirmPassword', form.confirmPassword);
               formData.append('selectedFile', blob);
-              try {
-                dispatch(signup(formData, history, setError));
-              } catch (err) {
-                setError(err.message);
-              }
+
+              (dispatch(signup(formData, history)) as any).catch(
+                (err: React.SetStateAction<string>) => {
+                  setError(err);
+                },
+              );
             });
         }
       } else {
-        dispatch(signin(formData, history, setError));
+        (dispatch(signin(formData, history)) as any).catch((err: React.SetStateAction<string>) => {
+          setError(err);
+        });
       }
     }
   };
