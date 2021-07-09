@@ -92,6 +92,8 @@ const AuthForm = () => {
   };
 
   const handleSubmit = (e: React.SyntheticEvent) => {
+    setError("User doesn't exist");
+
     e.preventDefault();
     const formData = new FormData();
     formData.append('email', form.email);
@@ -132,16 +134,16 @@ const AuthForm = () => {
     const result = res?.profileObj;
     const token = res?.tokenId;
 
-    try {
-      dispatch({ type: AUTH, data: { result, token } });
+    (dispatch({ type: AUTH, data: { result, token } }) as any).catch(
+      (err: React.SetStateAction<string>) => {
+        setError(err);
+      },
+    );
 
-      history.push('/');
-    } catch (err) {
-      console.log(err);
-    }
+    history.push('/');
   };
 
-  const googleError = () => console.log('Google Sign In was unsuccessful. Try again later');
+  const googleError = () => setError('Google Sign In was unsuccessful. Try again later');
 
   const handleChange = (e: { target: { name: string; value: string } }) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -198,12 +200,12 @@ const AuthForm = () => {
         {isSignup ? (
           <>
             Already have an account?
-            <Button>Sign in</Button>
+            <Button>Go to Sign in</Button>
           </>
         ) : (
           <>
             Don&#39;t have an account?
-            <Button>Sign Up</Button>
+            <Button>Go to Sign Up</Button>
           </>
         )}
       </div>
