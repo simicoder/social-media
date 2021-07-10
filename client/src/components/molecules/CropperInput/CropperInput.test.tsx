@@ -15,7 +15,7 @@ it('uploading normal image', async () => {
 
   const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 
-  const input = screen.getByTestId('input');
+  const input = screen.getByTestId('cropperInput');
 
   userEvent.upload(input, file);
 });

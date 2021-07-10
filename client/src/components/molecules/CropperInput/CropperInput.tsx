@@ -98,7 +98,7 @@ export const Input: React.FC<IPropsInput> = ({ handleImage, croppie, data }) => 
         >
           <StyledImg src={data.urlSelectedFile} />
           <StyledFileInput
-            data-testid="input"
+            data-testid="cropperInput"
             ref={fileInput}
             type="file"
             required

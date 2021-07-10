@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
@@ -49,6 +49,14 @@ const AuthForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [croppie, setCroppie] = useState<Croppie | null>(null);
+
+  useEffect(
+    () =>
+      function cleanup() {
+        setError('');
+      },
+    [],
+  );
 
   const switchMode = () => {
     setForm(initialState);
@@ -157,7 +165,9 @@ const AuthForm = () => {
         encType="multipart/form-data"
       >
         <h1>{isSignup ? 'Sign up' : 'Sign in'}</h1>
+
         {error && <Error>{error}</Error>}
+
         {isSignup && <TextInput label="name" name="name" onChange={handleChange} />}
         <TextInput label="email" name="email" onChange={handleChange} type="email" />
         <TextInput
@@ -169,20 +179,24 @@ const AuthForm = () => {
         {isSignup && (
           <>
             <TextInput
-              label="password"
+              label="confirm password"
               name="confirmPassword"
               onChange={handleChange}
               type={showPassword ? 'text' : 'password'}
             />
           </>
         )}
+
         {isSignup && (
           <CropperInput defaultImg={profileIcon} setCroppie={setCroppie} croppie={croppie} />
         )}
+
         <Button type="button" onClick={() => setShowPassword(!showPassword)}>
           {showPassword ? 'Hide password' : 'Show Passoword'}
         </Button>
+
         <Button type="submit">{isSignup ? 'Sign Up' : 'Sign In'}</Button>
+
         <GoogleLogin
           clientId="460129690206-sv9i6vkok7kvbgha43s56nrke7sqe3km.apps.googleusercontent.com"
           render={(renderProps) => (

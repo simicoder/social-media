@@ -50,6 +50,7 @@
     "@typescript-eslint/ban-types": "off",
     "jsx-a11y/href-no-hash": "off",
     "arrow-parens": "off",
-    "react/no-array-index-key": "off"
+    "react/no-array-index-key": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }
