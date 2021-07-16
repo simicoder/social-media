@@ -9,7 +9,7 @@ import TextInput from '../../atoms/TextInput/TextInput';
 import Button from '../../atoms/Button/Button';
 import Textarea from '../../atoms/Textarea/Textarea';
 import CropperInput from '../../molecules/CropperInput/CropperInput';
-import { hostUrl } from '../../../constants/url';
+import { IProps, IPostData } from './types';
 
 const StyledForm = styled.form`
   display: flex;
@@ -32,17 +32,6 @@ const StyledForm = styled.form`
 const StyledTitle = styled.h1`
   font-weight: 100;
 `;
-
-interface IProps {
-  currentId: number;
-  setCurrentId: Function;
-  setIsUpdate: Function | null;
-}
-
-interface IPostData {
-  title: string;
-  description: string;
-}
 
 const initialState = {
   title: '',

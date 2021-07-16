@@ -9,6 +9,7 @@ import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
 import CommentForm from '../../molecules/CommentForm/CommentForm';
 import Comments from '../../molecules/Comments/Comments';
 import Paragraph from '../../atoms/Paragraph/Paragraph';
+import { IProps } from './types';
 
 const StyledWrapper = styled.article`
   display: flex;
@@ -93,25 +94,6 @@ const StyledCreatorTag = styled.div`
   margin-right: 10px;
 `;
 
-interface IProps {
-  post: IPost;
-  setCurrentId: Function;
-  setIsUpdate: Function;
-}
-
-export interface IPost {
-  title: string;
-  description: string;
-  creatorName: string;
-  creator: string;
-  creatorImage: string;
-  selectedFile: string;
-  createdAt: string;
-  likes: Array<string>;
-  _id: number;
-  comments: any;
-}
-
 const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile')!);
@@ -152,13 +134,13 @@ const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
     <StyledWrapper>
       <StyledHeaderContainer>
         <StyledCreatorContainer>
-          <ProfileImage alt="avatar" src={post.creatorImage} />
-          <StyledCreatorTag>{post.creatorName}</StyledCreatorTag>
+          <ProfileImage alt="postAvatar" src={post.creatorImage} />
+          <StyledCreatorTag data-testid="creatorName">{post.creatorName}</StyledCreatorTag>
         </StyledCreatorContainer>
         <p>{moment(post.createdAt).fromNow()}</p>
       </StyledHeaderContainer>
 
-      <StyledImg src={post.selectedFile} />
+      <StyledImg src={post.selectedFile} alt="postImage" />
 
       <StyledTitleContainer>
         <StyledTitle>{post.title}</StyledTitle>

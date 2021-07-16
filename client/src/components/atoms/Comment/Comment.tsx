@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
-import { IComments } from '../../molecules/Comments/Comments';
+import { IComments } from '../../molecules/Comments/types';
 import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
 import Paragraph from '../Paragraph/Paragraph';
 
@@ -38,7 +38,7 @@ const Comment: React.FC<IProps> = ({ comment }) => (
     <ProfileImage alt="avatar" src={comment.creatorImage} />
     <StyledContainer>
       <b>{comment.creatorName}</b>
-      <Paragraph>{comment.text}</Paragraph>
+      <Paragraph tabIndex={0}>{comment.text}</Paragraph>
       <StyledTime>{moment(comment.created).fromNow()}</StyledTime>
     </StyledContainer>
   </StyledWrapper>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import AuthForm from '../components/organisms/AuthForm/AuthForm';
 import GlobalStyle from '../theme/GlobalStyle';

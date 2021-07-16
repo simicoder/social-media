@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Comment from '../../atoms/Comment/Comment';
+import { IProps } from './types';
 
 const StyledWrapper = styled.form`
   display: flex;
@@ -28,18 +29,6 @@ const StyledWrapper = styled.form`
     background: ${({ theme }) => theme.active};
   }
 `;
-
-type IProps = {
-  comments: Array<IComments>;
-};
-
-export interface IComments {
-  text: String;
-  creator: String;
-  creatorName: String;
-  creatorImage: string;
-  created: Date;
-}
 
 const CommentBar: React.FC<IProps> = ({ comments }) => {
   const user = JSON.parse(localStorage.getItem('profile')!);
