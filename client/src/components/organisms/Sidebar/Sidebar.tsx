@@ -72,12 +72,16 @@ const Sidebar: React.FC = () => (
     <StyledLinksList>
       <StyledLi>
         <StyledNavLink to="/">
-          <ButtonIcon icon={homeIcon} size={90} />
+          <ButtonIcon icon={homeIcon} size={90}>
+            Home
+          </ButtonIcon>
         </StyledNavLink>
       </StyledLi>
       <StyledLi>
         <StyledNavLink to="/addPost">
-          <ButtonIcon icon={addIcon} size={90} />
+          <ButtonIcon icon={addIcon} size={90}>
+            Add Post
+          </ButtonIcon>
         </StyledNavLink>
       </StyledLi>
     </StyledLinksList>
