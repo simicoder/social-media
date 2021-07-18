@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import likeActiveIcon from '../../../assets/Icons/likeActiveIcon.svg';
 import likeUnActiveIcon from '../../../assets/Icons/likeUnActiveIcon.svg';
 
-const LikeIcon = styled.button<{ isActive: boolean }>`
+export const LikeIcon = styled.button<{ isActive: boolean }>`
   display: block;
   width: 38px;
   height: 38px;
@@ -19,5 +19,3 @@ const LikeIcon = styled.button<{ isActive: boolean }>`
     background-color: ${({ theme }) => theme.active};
   }
 `;
-
-export default LikeIcon;

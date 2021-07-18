@@ -2,7 +2,7 @@ import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
-import Root from './views/Root';
+import { Root } from './views/Root';
 import reportWebVitals from './reportWebVitals';
 import { reducers } from './reducers';
 

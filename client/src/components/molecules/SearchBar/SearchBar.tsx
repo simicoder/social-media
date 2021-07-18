@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import SearchButton from '../../atoms/SearchButton/SearchButton';
+import { SearchButton } from '../../atoms/SearchButton/SearchButton';
 import { searchPosts } from '../../../actions/posts';
 
 const StyledForm = styled.form`
@@ -36,7 +36,7 @@ export const SearchForm: React.FC<IProps> = ({ handleSubmit }) => (
   </StyledForm>
 );
 
-const SearchBar: React.FC = () => {
+export const SearchBar: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const handleSubmit = async (e: any) => {
@@ -48,5 +48,3 @@ const SearchBar: React.FC = () => {
 
   return <SearchForm handleSubmit={handleSubmit} />;
 };
-
-export default SearchBar;

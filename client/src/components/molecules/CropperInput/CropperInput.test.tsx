@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '../../../utils/testUtils';
+import { render, screen, act } from '../../../utils/testUtils';
 import { Input } from './CropperInput';
 
 it('uploading normal image', async () => {
@@ -17,5 +17,5 @@ it('uploading normal image', async () => {
 
   const input = screen.getByTestId('cropperInput');
 
-  userEvent.upload(input, file);
+  await act(async () => userEvent.upload(input, file));
 });

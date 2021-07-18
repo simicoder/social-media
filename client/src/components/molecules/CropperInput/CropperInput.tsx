@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import Croppie from 'croppie';
 import 'croppie/croppie.css';
-import useWindowWidth from '../../../utils/useWindowWidth';
-import Icon from '../../atoms/Icon/Icon';
+import { useWindowWidth } from '../../../utils/useWindowWidth';
+import { ButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import removeIcon from '../../../assets/Icons/removeIcon.svg';
 import addIcon from '../../../assets/Icons/addIcon.svg';
 
@@ -72,7 +72,7 @@ export const Input: React.FC<IPropsInput> = ({ handleImage, croppie, data }) => 
         <>
           <StyledImageCropper id="imageCropper" />
           <StyledButtonsWrapper>
-            <Icon
+            <ButtonIcon
               icon={removeIcon}
               size={56}
               type="button"
@@ -80,7 +80,7 @@ export const Input: React.FC<IPropsInput> = ({ handleImage, croppie, data }) => 
                 croppie.setZoom(croppie._currentZoom - 0.01);
               }}
             />
-            <Icon
+            <ButtonIcon
               icon={addIcon}
               size={56}
               type="button"
@@ -112,7 +112,7 @@ export const Input: React.FC<IPropsInput> = ({ handleImage, croppie, data }) => 
   );
 };
 
-const CropperInput: React.FC<IPropsCropperInput> = ({ defaultImg, setCroppie, croppie }) => {
+export const CropperInput: React.FC<IPropsCropperInput> = ({ defaultImg, setCroppie, croppie }) => {
   const windowWidth = useWindowWidth();
 
   const initialState = {
@@ -161,5 +161,3 @@ const CropperInput: React.FC<IPropsCropperInput> = ({ defaultImg, setCroppie, cr
 
   return <Input handleImage={handleImage} croppie={croppie} data={data} />;
 };
-
-export default CropperInput;

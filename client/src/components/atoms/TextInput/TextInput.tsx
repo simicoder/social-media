@@ -71,7 +71,7 @@ type Props = {
   value?: string;
 };
 
-const TextInput: React.FC<Props> = ({ label, name, onChange, type, maxLength, value }) => (
+export const TextInput: React.FC<Props> = ({ label, name, onChange, type, maxLength, value }) => (
   <Wrapper>
     <StyledInput
       placeholder={label}
@@ -88,5 +88,3 @@ const TextInput: React.FC<Props> = ({ label, name, onChange, type, maxLength, va
     </StyledLabel>
   </Wrapper>
 );
-
-export default TextInput;

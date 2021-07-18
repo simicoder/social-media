@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Navbar from '../components/organisms/Navbar/Navbar';
-import Sidebar from '../components/organisms/Sidebar/Sidebar';
+import { Navbar } from '../components/organisms/Navbar/Navbar';
+import { Sidebar } from '../components/organisms/Sidebar/Sidebar';
 
 const StyledWrapper = styled.section`
   padding-top: 70px;
@@ -14,7 +14,7 @@ type Props = {
   children: any;
 };
 
-const UserPageTemplate: React.FC<Props> = ({ children }) => {
+export const UserPageTemplate: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const updateViewState = () => {
@@ -40,5 +40,3 @@ const UserPageTemplate: React.FC<Props> = ({ children }) => {
     </>
   );
 };
-
-export default UserPageTemplate;

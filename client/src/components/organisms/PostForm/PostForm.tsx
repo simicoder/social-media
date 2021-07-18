@@ -5,10 +5,10 @@ import { useHistory } from 'react-router-dom';
 import Croppie from 'croppie';
 import { createPost, updatePost } from '../../../actions/posts';
 import uploadFileIcon from '../../../assets/Icons/uploadFileIcon.svg';
-import TextInput from '../../atoms/TextInput/TextInput';
-import Button from '../../atoms/Button/Button';
-import Textarea from '../../atoms/Textarea/Textarea';
-import CropperInput from '../../molecules/CropperInput/CropperInput';
+import { TextInput } from '../../atoms/TextInput/TextInput';
+import { Button } from '../../atoms/Button/Button';
+import { Textarea } from '../../atoms/Textarea/Textarea';
+import { CropperInput } from '../../molecules/CropperInput/CropperInput';
 import { IProps, IPostData } from './types';
 
 const StyledForm = styled.form`
@@ -38,7 +38,7 @@ const initialState = {
   description: '',
 };
 
-const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) => {
+export const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) => {
   const [postData, setPostData] = useState<IPostData>(initialState);
   const [croppie, setCroppie] = useState<Croppie | null>(null);
 
@@ -129,5 +129,3 @@ const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) =>
     </StyledForm>
   );
 };
-
-export default PostForm;

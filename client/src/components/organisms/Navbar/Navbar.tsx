@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { NavLink, Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LogoIcon from '../../../assets/Icons/LogoIcon.png';
-import Button from '../../atoms/Button/Button';
-import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
-import MenuButton from '../../atoms/MenuButton/MenuButton';
-import SearchBar from '../../molecules/SearchBar/SearchBar';
-import useWindowWidth from '../../../utils/useWindowWidth';
-import SearchButton from '../../atoms/SearchButton/SearchButton';
-import BackButton from '../../atoms/BackButton/BackButton';
+import { Button } from '../../atoms/Button/Button';
+import { ProfileImage } from '../../atoms/ProfileImage/ProfileImage';
+import { MenuButton } from '../../atoms/MenuButton/MenuButton';
+import { SearchBar } from '../../molecules/SearchBar/SearchBar';
+import { useWindowWidth } from '../../../utils/useWindowWidth';
+import { SearchButton } from '../../atoms/SearchButton/SearchButton';
+import { BackButton } from '../../atoms/BackButton/BackButton';
 
 const StyledWrapper = styled.nav`
   display: flex;
@@ -68,7 +68,7 @@ type Props = {
   setIsOpen: Function;
 };
 
-const Navbar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
+export const Navbar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')!));
   const [activeSearchBar, setActiveSearchBar] = useState(false);
   const dispatch = useDispatch();
@@ -97,7 +97,7 @@ const Navbar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
       ) : (
         <>
           <StyledLogoContainer>
-            {windowWidth < 1024 && <MenuButton onClick={setOpen} />}
+            {windowWidth < 1024 && <MenuButton onClick={setOpen} data-testid="menuButton" />}
             <StyledLogoLink to="/"></StyledLogoLink>
           </StyledLogoContainer>
           {windowWidth < 550 ? (
@@ -126,4 +126,3 @@ const Navbar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
     </StyledWrapper>
   );
 };
-export default Navbar;

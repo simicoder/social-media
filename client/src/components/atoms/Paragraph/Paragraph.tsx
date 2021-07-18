@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Paragraph = styled.p`
+export const Paragraph = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,5 +11,3 @@ const Paragraph = styled.p`
   word-break: break-word;
   margin: 10px;
 `;
-
-export default Paragraph;

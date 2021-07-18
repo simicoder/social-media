@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import ButtonIcon from '../../atoms/Icon/Icon';
+import { ButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import addIcon from '../../../assets/Icons/addIcon.svg';
 import homeIcon from '../../../assets/Icons/homeIcon.svg';
 
@@ -67,7 +67,7 @@ const StyledFooter = styled.footer`
   justify-content: center;
 `;
 
-const Sidebar: React.FC = () => (
+export const Sidebar: React.FC = () => (
   <StyledWrapper>
     <StyledLinksList>
       <StyledLi>
@@ -88,5 +88,3 @@ const Sidebar: React.FC = () => (
     <StyledFooter>Website by SimiCoder</StyledFooter>
   </StyledWrapper>
 );
-
-export default Sidebar;

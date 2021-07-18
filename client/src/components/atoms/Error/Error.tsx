@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Error = styled.p`
+export const Error = styled.p`
   display: flex;
   text-align: center;
   justify-content: center;
@@ -9,5 +9,3 @@ const Error = styled.p`
   font-size: 1em;
   color: ${({ theme }) => theme.error};
 `;
-
-export default Error;

@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Icon from './Icon';
+import { ButtonIcon } from './ButtonIcon';
 
 it('render basic icon', async () => {
   const fakeSize = 24;
   const fakeIcon = '/icon';
 
-  render(<Icon size={fakeSize} icon={fakeIcon} />);
+  render(<ButtonIcon size={fakeSize} icon={fakeIcon} />);
 
   const Button = screen.getByRole('button');
 

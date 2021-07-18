@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import UserPageTemplate from './UserPageTemplate';
+import { UserPageTemplate } from '../templates/UserPageTemplate';
 import GlobalStyle from '../theme/GlobalStyle';
-import PostForm from '../components/organisms/PostForm/PostForm';
+import { PostForm } from '../components/organisms/PostForm/PostForm';
 
-const AddPostTemplate: React.FC = () => {
+export const AddPost: React.FC = () => {
   const [currentId, setCurrentId] = useState(0);
 
   return (
@@ -15,4 +15,3 @@ const AddPostTemplate: React.FC = () => {
     </>
   );
 };
-export default AddPostTemplate;

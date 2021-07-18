@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import menuIcon from '../../../assets/Icons/menuIcon.svg';
 
-const MenuButton = styled.button`
+export const MenuButton = styled.button`
   display: flex;
   background-color: ${({ theme }) => theme.button};
   background-image: url(${menuIcon});
@@ -19,5 +19,3 @@ const MenuButton = styled.button`
     transform: scale(1.1);
   }
 `;
-
-export default MenuButton;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Icon = styled.button<{ size: number; icon: string }>`
+export const ButtonIcon = styled.button<{ size: number; icon: string }>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -21,5 +21,3 @@ const Icon = styled.button<{ size: number; icon: string }>`
     background-color: ${({ theme }) => theme.active};
   }
 `;
-
-export default Icon;

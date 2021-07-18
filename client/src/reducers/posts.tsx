@@ -1,5 +1,5 @@
 import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
-import { IPost } from '../components/organisms/Post/Post';
+import { IPost } from '../components/organisms/Post/types';
 
 interface IAction {
   type: string;
@@ -13,7 +13,7 @@ interface IActionDelete {
 
 type Action = IAction | IActionDelete;
 
-export default (posts = [], action: Action) => {
+export const postsReducer = (posts = [], action: Action) => {
   switch (action.type) {
     case FETCH_ALL:
       return action.payload;

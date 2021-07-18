@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import SearchButton from './SearchButton';
+import { SearchButton } from './SearchButton';
 
 it('render SearchButton', async () => {
   render(<SearchButton />);

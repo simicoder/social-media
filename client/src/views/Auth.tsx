@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import AuthForm from '../components/organisms/AuthForm/AuthForm';
+import { AuthForm } from '../components/organisms/AuthForm/AuthForm';
 import GlobalStyle from '../theme/GlobalStyle';
 
 const StyledWrapper = styled.div`
@@ -9,7 +9,7 @@ const StyledWrapper = styled.div`
   align-items: center;
 `;
 
-const SignUp: React.FC = () => (
+export const Auth: React.FC = () => (
   <>
     <GlobalStyle />
     <StyledWrapper>
@@ -17,5 +17,3 @@ const SignUp: React.FC = () => (
     </StyledWrapper>
   </>
 );
-
-export default SignUp;

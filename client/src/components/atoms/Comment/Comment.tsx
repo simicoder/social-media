@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { IComments } from '../../molecules/Comments/types';
-import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
-import Paragraph from '../Paragraph/Paragraph';
+import { ProfileImage } from '../ProfileImage/ProfileImage';
+import { Paragraph } from '../Paragraph/Paragraph';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -33,7 +33,7 @@ type IProps = {
   comment: IComments;
 };
 
-const Comment: React.FC<IProps> = ({ comment }) => (
+export const Comment: React.FC<IProps> = ({ comment }) => (
   <StyledWrapper>
     <ProfileImage alt="avatar" src={comment.creatorImage} />
     <StyledContainer>
@@ -43,5 +43,3 @@ const Comment: React.FC<IProps> = ({ comment }) => (
     </StyledContainer>
   </StyledWrapper>
 );
-
-export default Comment;

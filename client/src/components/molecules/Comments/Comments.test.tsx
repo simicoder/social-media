@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { render, screen } from '../../../utils/testUtils';
-import Comments from './Comments';
+import { Comments } from './Comments';
 
 it('displaying normal comments', async () => {
   const fakeComments = [

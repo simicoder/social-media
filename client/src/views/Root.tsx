@@ -2,25 +2,23 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { routes } from '../routes/index';
-import MainTemplate from '../templates/MainTemplate';
-import AddPostTemplate from '../templates/AddPostTemplate';
-import AuthTemplate from '../templates/AuthTemplate';
-import SearchResultTemplate from '../templates/SearchResultTemplate';
+import { Main } from './Main';
+import { AddPost } from './AddPost';
+import { Auth } from './Auth';
+import { SearchResult } from './SearchResult';
 import { theme } from '../theme/mainTheme';
 
-function Root() {
+export function Root() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Switch>
-          <Route exact path={routes.home} component={MainTemplate} />
-          <Route exact path={routes.addPost} component={AddPostTemplate} />
-          <Route exact path={routes.auth} component={AuthTemplate} />
-          <Route exact path={routes.search} component={SearchResultTemplate} />
+          <Route exact path={routes.home} component={Main} />
+          <Route exact path={routes.addPost} component={AddPost} />
+          <Route exact path={routes.auth} component={Auth} />
+          <Route exact path={routes.search} component={SearchResult} />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>
   );
 }
-
-export default Root;

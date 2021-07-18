@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import arrowBackIcon from '../../../assets/Icons/arrowBackIcon.svg';
 
-const BackButton = styled.button`
+export const BackButton = styled.button`
   background-color: ${({ theme }) => theme.background};
   border: none;
   background-image: url(${arrowBackIcon});
@@ -12,5 +12,3 @@ const BackButton = styled.button`
   height: 33px;
   width: 33px;
 `;
-
-export default BackButton;

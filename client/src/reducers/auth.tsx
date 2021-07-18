@@ -4,7 +4,7 @@ interface IState {
   authData: FormData | null | undefined;
 }
 
-const authReducer = (
+export const authReducer = (
   state: IState = { authData: null },
   action: { type: string; data?: FormData },
 ) => {
@@ -21,5 +21,3 @@ const authReducer = (
       return state;
   }
 };
-
-export default authReducer;

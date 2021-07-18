@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { commentPost } from '../../../actions/posts';
-import Icon from '../../atoms/Icon/Icon';
+import { ButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import sendIcon from '../../../assets/Icons/sendIcon.svg';
 
 const StyledForm = styled.form`
@@ -37,11 +37,11 @@ interface IProps {
 export const Form: React.FC<IPropsForm> = ({ handleSubmit }) => (
   <StyledForm onSubmit={handleSubmit} noValidate autoComplete="off">
     <StyledInput data-testid="input" name="text" placeholder="Comment" required />
-    <Icon data-testid="submit" type="submit" icon={sendIcon} size={35} />
+    <ButtonIcon data-testid="submit" type="submit" icon={sendIcon} size={35} />
   </StyledForm>
 );
 
-const CommentForm: React.FC<IProps> = ({ id }) => {
+export const CommentForm: React.FC<IProps> = ({ id }) => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile')!);
 
@@ -61,5 +61,3 @@ const CommentForm: React.FC<IProps> = ({ id }) => {
 
   return <Form handleSubmit={handleSubmit} />;
 };
-
-export default CommentForm;

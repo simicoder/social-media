@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function useWindowWidth(): number {
+export function useWindowWidth(): number {
   const isSSR = typeof document.documentElement.clientWidth !== 'undefined';
   const [windowWidth, setWindowWidth] = React.useState(1200);
 

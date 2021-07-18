@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Textarea = styled.textarea`
+export const Textarea = styled.textarea`
   margin-top: 20px;
   font-family: inherit;
   width: 90%;
@@ -27,5 +27,3 @@ const Textarea = styled.textarea`
     opacity: 1;
   }
 `;
-
-export default Textarea;

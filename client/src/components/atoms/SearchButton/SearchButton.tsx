@@ -25,11 +25,9 @@ const StyledIcon = styled.div`
   background-color: ${({ theme }) => theme.background};
 `;
 
-const SearchButton = () => (
+export const SearchButton = () => (
   <StyledButton data-testid="submit">
     Search
     <StyledIcon />
   </StyledButton>
 );
-
-export default SearchButton;

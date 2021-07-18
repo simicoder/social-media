@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import moment from 'moment';
-import Comment from './Comment';
+import { Comment } from './Comment';
 
 it('render basic comment', async () => {
   const fakeComment = {

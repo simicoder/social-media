@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Label = styled.label`
+export const Label = styled.label`
   position: absolute;
   top: 0;
   display: block;
@@ -8,5 +8,3 @@ const Label = styled.label`
   font-size: 1rem;
   color: ${({ theme }) => theme.active};
 `;
-
-export default Label;

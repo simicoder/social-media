@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import UserPageTemplate from './UserPageTemplate';
+import { UserPageTemplate } from '../templates/UserPageTemplate';
 import GlobalStyle from '../theme/GlobalStyle';
-import Post from '../components/organisms/Post/Post';
+import { Post } from '../components/organisms/Post/Post';
 import { IPost } from '../components/organisms/Post/types';
 
-const SearchResultTemplate: React.FC = () => {
+export const SearchResult: React.FC = () => {
   const [currentId, setCurrentId] = useState(0);
   const posts = useSelector((state: any) => state.posts);
   const [isUpdate, setIsUpdate] = useState(false);
@@ -25,4 +25,3 @@ const SearchResultTemplate: React.FC = () => {
     </>
   );
 };
-export default SearchResultTemplate;

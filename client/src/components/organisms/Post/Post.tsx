@@ -3,12 +3,12 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import styled from 'styled-components';
 import { likePost, deletePost } from '../../../actions/posts';
-import LikeIcon from '../../atoms/LikeIcon/LikeIcon';
-import Button from '../../atoms/Button/Button';
-import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
-import CommentForm from '../../molecules/CommentForm/CommentForm';
-import Comments from '../../molecules/Comments/Comments';
-import Paragraph from '../../atoms/Paragraph/Paragraph';
+import { LikeIcon } from '../../atoms/LikeIcon/LikeIcon';
+import { Button } from '../../atoms/Button/Button';
+import { ProfileImage } from '../../atoms/ProfileImage/ProfileImage';
+import { CommentForm } from '../../molecules/CommentForm/CommentForm';
+import { Comments } from '../../molecules/Comments/Comments';
+import { Paragraph } from '../../atoms/Paragraph/Paragraph';
 import { IProps } from './types';
 
 const StyledWrapper = styled.article`
@@ -94,7 +94,7 @@ const StyledCreatorTag = styled.div`
   margin-right: 10px;
 `;
 
-const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
+export const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile')!);
 
@@ -167,5 +167,3 @@ const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
     </StyledWrapper>
   );
 };
-
-export default Post;

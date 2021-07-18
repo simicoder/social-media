@@ -6,11 +6,11 @@ import styled from 'styled-components';
 import Croppie from 'croppie';
 import { signin, signup } from '../../../actions/auth';
 import { AUTH } from '../../../constants/actionTypes';
-import TextInput from '../../atoms/TextInput/TextInput';
-import Button from '../../atoms/Button/Button';
+import { TextInput } from '../../atoms/TextInput/TextInput';
+import { Button } from '../../atoms/Button/Button';
 import profileIcon from '../../../assets/Icons/profileIcon.svg';
-import CropperInput from '../../molecules/CropperInput/CropperInput';
-import Error from '../../atoms/Error/Error';
+import { CropperInput } from '../../molecules/CropperInput/CropperInput';
+import { Error } from '../../atoms/Error/Error';
 
 const StyledForm = styled.form`
   display: flex;
@@ -38,7 +38,7 @@ const initialState = {
   urlSelectedFile: profileIcon,
 };
 
-const AuthForm = () => {
+export const AuthForm = () => {
   const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
   const [error, setError] = useState('');
@@ -86,7 +86,7 @@ const AuthForm = () => {
       return false;
     }
 
-    if (!form.email.includes('@') && !form.email.includes('.')) {
+    if (!(form.email.includes('@') && form.email.includes('.'))) {
       setError('Please check your email');
       return false;
     }
@@ -100,8 +100,6 @@ const AuthForm = () => {
   };
 
   const handleSubmit = (e: React.SyntheticEvent) => {
-    setError("User doesn't exist");
-
     e.preventDefault();
     const formData = new FormData();
     formData.append('email', form.email);
@@ -128,7 +126,12 @@ const AuthForm = () => {
                   setError(err);
                 },
               );
+            })
+            .catch((err: React.SetStateAction<string>) => {
+              setError(err);
             });
+        } else {
+          setError('image is not loaded, try again');
         }
       } else {
         (dispatch(signin(formData, history)) as any).catch((err: React.SetStateAction<string>) => {
@@ -142,11 +145,7 @@ const AuthForm = () => {
     const result = res?.profileObj;
     const token = res?.tokenId;
 
-    (dispatch({ type: AUTH, data: { result, token } }) as any).catch(
-      (err: React.SetStateAction<string>) => {
-        setError(err);
-      },
-    );
+    dispatch({ type: AUTH, data: { result, token } }) as any;
 
     history.push('/');
   };
@@ -226,5 +225,3 @@ const AuthForm = () => {
     </>
   );
 };
-
-export default AuthForm;

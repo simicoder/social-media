@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Comment from '../../atoms/Comment/Comment';
+import { Comment } from '../../atoms/Comment/Comment';
 import { IProps } from './types';
 
 const StyledWrapper = styled.form`
@@ -30,7 +30,7 @@ const StyledWrapper = styled.form`
   }
 `;
 
-const CommentBar: React.FC<IProps> = ({ comments }) => {
+export const Comments: React.FC<IProps> = ({ comments }) => {
   const user = JSON.parse(localStorage.getItem('profile')!);
 
   return (
@@ -41,5 +41,3 @@ const CommentBar: React.FC<IProps> = ({ comments }) => {
     </StyledWrapper>
   );
 };
-
-export default CommentBar;
