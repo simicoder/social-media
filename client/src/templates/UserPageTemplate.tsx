@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Navbar } from '../components/organisms/Navbar/Navbar';
 import { Sidebar } from '../components/organisms/Sidebar/Sidebar';
+import { SkipToContent } from '../components/atoms/SkipToContent/SkipToContent';
 
 const StyledWrapper = styled.section`
   padding-top: 70px;
@@ -16,6 +17,12 @@ type Props = {
 
 export const UserPageTemplate: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
+
+  const mainSection = useRef<HTMLInputElement>(null);
+
+  const handleSkipToContent = () => {
+    mainSection.current && mainSection.current.focus();
+  };
 
   const updateViewState = () => {
     if (document.documentElement.clientWidth < 1024) {
@@ -32,10 +39,16 @@ export const UserPageTemplate: React.FC<Props> = ({ children }) => {
 
   return (
     <>
+      <SkipToContent type="button" onClick={handleSkipToContent}>
+        Skip Navigation
+      </SkipToContent>
       <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
       {isOpen && <Sidebar />}
+
       <main>
-        <StyledWrapper>{children}</StyledWrapper>
+        <StyledWrapper ref={mainSection} tabIndex={0}>
+          {children}
+        </StyledWrapper>
       </main>
     </>
   );

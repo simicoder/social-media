@@ -6,7 +6,7 @@ import { useWindowWidth } from '../../../utils/useWindowWidth';
 import { ButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import removeIcon from '../../../assets/Icons/removeIcon.svg';
 import addIcon from '../../../assets/Icons/addIcon.svg';
-import { IPropsInput, IData, IPropsCropperInput } from './types';
+import { IPropsInput, IPropsCropperInput } from './types';
 
 const StyledFileInput = styled.input`
   display: none;

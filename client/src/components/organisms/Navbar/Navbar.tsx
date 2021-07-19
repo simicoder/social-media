@@ -98,7 +98,7 @@ export const Navbar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
         <>
           <StyledLogoContainer>
             {windowWidth < 1024 && <MenuButton onClick={setOpen} data-testid="menuButton" />}
-            <StyledLogoLink to="/"></StyledLogoLink>
+            <StyledLogoLink to="/" />
           </StyledLogoContainer>
           {windowWidth < 550 ? (
             <div onClick={() => setActiveSearchBar(true)}>
