@@ -5,12 +5,11 @@ import ReactDOM from 'react-dom';
 import { Root } from './views/Root';
 import reportWebVitals from './reportWebVitals';
 import { reducers } from './reducers';
+import { worker } from './mocks/browser';
 
 export const store = configureStore({ reducer: reducers });
 
 if (process.env.NODE_ENV === 'development') {
-  // eslint-disable-next-line global-require
-  const { worker } = require('./mocks/browser');
   worker.start();
 }
 

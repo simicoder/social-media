@@ -7,7 +7,7 @@ import { IPost } from '../components/organisms/Post/types';
 
 export const SearchResult: React.FC = () => {
   const [currentId, setCurrentId] = useState(0);
-  const posts = useSelector((state: any) => state.posts);
+  const posts = useSelector((state: { posts: Array<IPost> }) => state.posts);
   const [isUpdate, setIsUpdate] = useState(false);
 
   return (

@@ -11,7 +11,7 @@ const StyledWrapper = styled.section`
 `;
 
 type Props = {
-  children: any;
+  children: React.ReactNode;
 };
 
 export const UserPageTemplate: React.FC<Props> = ({ children }) => {

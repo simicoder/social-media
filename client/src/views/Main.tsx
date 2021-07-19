@@ -11,10 +11,8 @@ import { getPosts } from '../actions/posts';
 export const Main: React.FC = () => {
   const [currentId, setCurrentId] = useState(0);
   const dispatch = useDispatch();
-  const posts = useSelector((state: any) => state.posts);
+  const posts = useSelector((state: { posts: Array<IPost> }) => state.posts);
   const [isUpdate, setIsUpdate] = useState(false);
-
-  console.log(posts);
 
   useEffect(() => {
     dispatch(getPosts());

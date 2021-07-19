@@ -1,7 +1,9 @@
+import { IComments } from '../../molecules/Comments/types';
+
 export interface IProps {
   post: IPost;
-  setCurrentId: Function;
-  setIsUpdate: Function;
+  setCurrentId: React.Dispatch<React.SetStateAction<number>>;
+  setIsUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IPost {
@@ -14,5 +16,5 @@ export interface IPost {
   createdAt: string;
   likes: Array<string>;
   _id: number;
-  comments: any;
+  comments: Array<IComments>;
 }

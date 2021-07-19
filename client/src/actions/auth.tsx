@@ -1,10 +1,10 @@
 import { RouteComponentProps } from 'react-router-dom';
+import { Dispatch } from 'redux';
 import { AUTH } from '../constants/actionTypes';
 import * as api from '../api/index';
 
 export const signin =
-  (formData: FormData, router: RouteComponentProps['history']) =>
-  async (dispatch: (arg0: { type: string; data: string }) => void) => {
+  (formData: FormData, router: RouteComponentProps['history']) => async (dispatch: Dispatch) => {
     try {
       const { data } = await api.signIn(formData);
 
@@ -17,8 +17,7 @@ export const signin =
   };
 
 export const signup =
-  (formData: FormData, router: RouteComponentProps['history']) =>
-  async (dispatch: (arg0: { type: string; data: string }) => void) => {
+  (formData: FormData, router: RouteComponentProps['history']) => async (dispatch: Dispatch) => {
     try {
       const { data } = await api.signUp(formData);
 

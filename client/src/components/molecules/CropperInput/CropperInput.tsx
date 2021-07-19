@@ -6,6 +6,7 @@ import { useWindowWidth } from '../../../utils/useWindowWidth';
 import { ButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import removeIcon from '../../../assets/Icons/removeIcon.svg';
 import addIcon from '../../../assets/Icons/addIcon.svg';
+import { IPropsInput, IData, IPropsCropperInput } from './types';
 
 const StyledFileInput = styled.input`
   display: none;
@@ -45,23 +46,6 @@ const StyledImg = styled.div<{ src: string }>`
 const StyledImageCropper = styled.div`
   margin-top: 20px;
 `;
-
-interface IPropsInput {
-  handleImage: React.ChangeEventHandler<HTMLInputElement>;
-  croppie: any;
-  data: IData;
-}
-
-interface IData {
-  selectedFile: Blob;
-  urlSelectedFile: string;
-}
-
-interface IPropsCropperInput {
-  defaultImg: string;
-  setCroppie: Function;
-  croppie: any;
-}
 
 export const Input: React.FC<IPropsInput> = ({ handleImage, croppie, data }) => {
   const fileInput = useRef<HTMLInputElement>(null);
@@ -131,15 +115,17 @@ export const CropperInput: React.FC<IPropsCropperInput> = ({ defaultImg, setCrop
       const oFReader = new FileReader();
       oFReader.readAsDataURL(target.files[0]);
 
-      oFReader.onload = (oFREvent: any) => {
+      oFReader.onload = (oFREvent: Event) => {
+        const oFRE = oFREvent as typeof oFREvent & { target: { result: string } };
+
         setData({
           selectedFile: target.files[0],
-          urlSelectedFile: oFREvent.target.result,
+          urlSelectedFile: oFRE.target.result,
         });
 
         const el = document.getElementById('imageCropper');
         if (el) {
-          const croppieInstance: any = new Croppie(el, {
+          const croppieInstance = new Croppie(el, {
             enableExif: true,
             viewport: {
               height: windowWidth < 1024 ? 240 : 400,
@@ -151,7 +137,7 @@ export const CropperInput: React.FC<IPropsCropperInput> = ({ defaultImg, setCrop
             },
           });
           croppieInstance.bind({
-            url: oFREvent.target.result,
+            url: oFRE.target.result,
           });
           setCroppie(croppieInstance);
         }

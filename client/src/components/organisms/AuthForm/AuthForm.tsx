@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
 import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import styled from 'styled-components';
@@ -77,7 +78,7 @@ export const AuthForm = () => {
         return false;
       }
 
-      if (croppie == null) {
+      if (croppie === null) {
         setError('Add profile image');
         return false;
       }
@@ -99,7 +100,7 @@ export const AuthForm = () => {
     return true;
   };
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('email', form.email);
@@ -116,16 +117,16 @@ export const AuthForm = () => {
                 height: 480,
               },
             })
-            .then((blob: Blob) => {
+            .then(async (blob: Blob) => {
               formData.append('name', form.name);
               formData.append('confirmPassword', form.confirmPassword);
               formData.append('selectedFile', blob);
 
-              (dispatch(signup(formData, history)) as any).catch(
-                (err: React.SetStateAction<string>) => {
-                  setError(err);
-                },
-              );
+              try {
+                (await dispatch(signup(formData, history))) as Dispatch;
+              } catch (err) {
+                setError(err);
+              }
             })
             .catch((err: React.SetStateAction<string>) => {
               setError(err);
@@ -134,9 +135,11 @@ export const AuthForm = () => {
           setError('image is not loaded, try again');
         }
       } else {
-        (dispatch(signin(formData, history)) as any).catch((err: React.SetStateAction<string>) => {
+        try {
+          (await dispatch(signin(formData, history))) as Dispatch;
+        } catch (err) {
           setError(err);
-        });
+        }
       }
     }
   };
@@ -145,7 +148,7 @@ export const AuthForm = () => {
     const result = res?.profileObj;
     const token = res?.tokenId;
 
-    dispatch({ type: AUTH, data: { result, token } }) as any;
+    dispatch({ type: AUTH, data: { result, token } });
 
     history.push('/');
   };

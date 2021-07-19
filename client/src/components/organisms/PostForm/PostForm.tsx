@@ -10,6 +10,7 @@ import { Button } from '../../atoms/Button/Button';
 import { Textarea } from '../../atoms/Textarea/Textarea';
 import { CropperInput } from '../../molecules/CropperInput/CropperInput';
 import { IProps, IPostData } from './types';
+import { IPost } from '../Post/types';
 
 const StyledForm = styled.form`
   display: flex;
@@ -42,8 +43,8 @@ export const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdat
   const [postData, setPostData] = useState<IPostData>(initialState);
   const [croppie, setCroppie] = useState<Croppie | null>(null);
 
-  const post = useSelector((state: any) =>
-    currentId ? state.posts.find((postItem: any) => postItem._id === currentId) : null,
+  const post: IPost | null | undefined = useSelector((state: { posts: Array<IPost> }) =>
+    currentId ? state.posts.find((postItem: IPost) => postItem._id === currentId) : null,
   );
 
   const dispatch = useDispatch();
@@ -102,7 +103,7 @@ export const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdat
 
   return (
     <StyledForm autoComplete="off" noValidate onSubmit={handleSubmit} encType="multipart/form-data">
-      <StyledTitle>{currentId ? `Editing "${post.title}"` : 'Create a Post'}</StyledTitle>
+      <StyledTitle>{post ? `Editing "${post.title}"` : 'Create a Post'}</StyledTitle>
       <TextInput
         type="text"
         maxLength={25}
@@ -118,7 +119,7 @@ export const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdat
         onChange={(e) => setPostData({ ...postData, description: e.target.value })}
       />
       <CropperInput
-        defaultImg={currentId ? post.selectedFile : uploadFileIcon}
+        defaultImg={post ? post.selectedFile : uploadFileIcon}
         setCroppie={setCroppie}
         croppie={croppie}
       />

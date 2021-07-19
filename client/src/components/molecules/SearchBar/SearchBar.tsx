@@ -39,11 +39,12 @@ export const SearchForm: React.FC<IProps> = ({ handleSubmit }) => (
 export const SearchBar: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    const target = e.target as typeof e.target & { text: { value: string } };
 
     history.push('/search');
-    dispatch(searchPosts(e.target.text.value));
+    dispatch(searchPosts(target.text.value));
   };
 
   return <SearchForm handleSubmit={handleSubmit} />;

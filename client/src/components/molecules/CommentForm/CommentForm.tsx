@@ -45,17 +45,19 @@ export const CommentForm: React.FC<IProps> = ({ id }) => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile')!);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const text = e.target.text.value;
+    const target = e.target as typeof e.target & { text: { value: string } };
+
+    const text = target.text.value;
 
     if (text) {
       const creatorName = user.result.name;
       const creatorImage = user.result.imageUrl;
 
       dispatch(commentPost(id, { text, creatorName, creatorImage }));
-      e.target.text.value = '';
+      target.text.value = '';
     }
   };
 

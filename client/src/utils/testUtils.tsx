@@ -6,11 +6,11 @@ import { Provider } from 'react-redux';
 import { reducers } from '../reducers/index';
 
 interface IWrapper {
-  children: any;
+  children: React.ReactNode;
 }
 
 function render(
-  ui: React.ReactElement<any, string | React.JSXElementConstructor<any>>,
+  ui: React.ReactElement,
   {
     preloadedState = {},
     store = configureStore({ reducer: reducers, preloadedState }),

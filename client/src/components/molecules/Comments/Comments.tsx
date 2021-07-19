@@ -30,14 +30,10 @@ const StyledWrapper = styled.form`
   }
 `;
 
-export const Comments: React.FC<IProps> = ({ comments }) => {
-  const user = JSON.parse(localStorage.getItem('profile')!);
-
-  return (
-    <StyledWrapper>
-      {comments.map((comment, i) => (
-        <Comment key={i} comment={comment} />
-      ))}
-    </StyledWrapper>
-  );
-};
+export const Comments: React.FC<IProps> = ({ comments }) => (
+  <StyledWrapper>
+    {comments.map((comment, i) => (
+      <Comment key={i} comment={comment} />
+    ))}
+  </StyledWrapper>
+);
