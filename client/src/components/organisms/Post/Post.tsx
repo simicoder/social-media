@@ -107,7 +107,7 @@ export const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
     if (post.likes.length > 0) {
       return post.likes.find((like) => like === (user?.result?.googleId || user?.result?._id)) ? (
         <>
-          <LikeIcon disabled={!user?.result} isActive={false} />
+          <LikeIcon aria-label="like" disabled={!user?.result} isActive={false} />
           &nbsp;
           {post.likes.length > 2
             ? `You and ${post.likes.length - 1} others`
@@ -115,7 +115,7 @@ export const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
         </>
       ) : (
         <>
-          <LikeIcon disabled={!user?.result} isActive={true} />
+          <LikeIcon aria-label="like" disabled={!user?.result} isActive={true} />
           &nbsp;
           {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
         </>
@@ -124,7 +124,7 @@ export const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
 
     return (
       <>
-        <LikeIcon disabled={!user?.result} isActive={true} />
+        <LikeIcon aria-label="like" disabled={!user?.result} isActive={true} />
         &nbsp;Like
       </>
     );

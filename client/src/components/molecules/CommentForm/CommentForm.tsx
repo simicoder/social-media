@@ -37,7 +37,13 @@ interface IProps {
 export const Form: React.FC<IPropsForm> = ({ handleSubmit }) => (
   <StyledForm onSubmit={handleSubmit} noValidate autoComplete="off">
     <StyledInput data-testid="input" name="text" placeholder="Comment" required />
-    <ButtonIcon data-testid="submit" type="submit" icon={sendIcon} size={35} />
+    <ButtonIcon
+      aria-label="send comment"
+      data-testid="submit"
+      type="submit"
+      icon={sendIcon}
+      size={35}
+    />
   </StyledForm>
 );
 

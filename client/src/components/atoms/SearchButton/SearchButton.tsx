@@ -11,7 +11,6 @@ const StyledButton = styled.button`
   background-color: ${({ theme }) => theme.background};
   height: 34px;
   color: ${({ theme }) => theme.color};
-  border: none;
   border: solid 1px black;
 `;
 
