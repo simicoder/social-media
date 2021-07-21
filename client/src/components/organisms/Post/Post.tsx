@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import styled from 'styled-components';
 import { likePost, deletePost } from '../../../actions/posts';
@@ -96,7 +96,7 @@ const StyledCreatorTag = styled.div`
 
 export const Post: React.FC<IProps> = ({ post, setCurrentId, setIsUpdate }) => {
   const dispatch = useDispatch();
-  const user = JSON.parse(localStorage.getItem('profile')!);
+  const user = useSelector((state: any) => state.auth.data);
 
   const updatePost = () => {
     setCurrentId(post._id);

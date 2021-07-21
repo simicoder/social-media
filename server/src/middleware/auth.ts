@@ -5,8 +5,7 @@ const secret = 'test';
 
 const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const authHeader = req.headers.authorization as string;
-    const token = authHeader.split(' ')[1];
+    const token = req.cookies.token;
     const isCustomAuth = token.length < 500;
 
     let decodedData;
@@ -23,7 +22,7 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
 
     next();
   } catch (error) {
-    console.log(error);
+    res.status(400).json({ message: 'Invalid credentials' });
   }
 };
 

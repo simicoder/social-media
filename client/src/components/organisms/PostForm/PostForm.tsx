@@ -49,7 +49,7 @@ export const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdat
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = JSON.parse(localStorage.getItem('profile')!);
+  const user = useSelector((state: any) => state.auth.data);
 
   useEffect(() => {
     if (post) setPostData(post);

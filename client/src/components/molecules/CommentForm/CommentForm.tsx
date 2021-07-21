@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { commentPost } from '../../../actions/posts';
 import { ButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
@@ -49,7 +49,7 @@ export const Form: React.FC<IPropsForm> = ({ handleSubmit }) => (
 
 export const CommentForm: React.FC<IProps> = ({ id }) => {
   const dispatch = useDispatch();
-  const user = JSON.parse(localStorage.getItem('profile')!);
+  const user = useSelector((state: any) => state.auth.data);
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();

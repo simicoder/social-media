@@ -1,22 +1,20 @@
 import * as actionType from '../constants/actionTypes';
 
 interface IState {
-  authData: FormData | null | undefined;
+  data: FormData | null | undefined;
 }
 
 export const authReducer = (
-  state: IState = { authData: null },
+  state: IState = { data: null },
   action: { type: string; data?: FormData },
 ) => {
   switch (action.type) {
     case actionType.AUTH:
-      localStorage.setItem('profile', JSON.stringify({ ...action?.data }));
-
-      return { ...state, authData: action.data, loading: false, errors: null };
+      return { ...state, data: action?.data, loading: false, errors: null };
     case actionType.LOGOUT:
-      localStorage.clear();
-
-      return { ...state, authData: null, loading: false, errors: null };
+      return { ...state, data: null, loading: false, errors: null };
+    case actionType.CHECK_TOKEN:
+      return { ...state, data: action?.data, loading: false, errors: action?.data };
     default:
       return state;
   }

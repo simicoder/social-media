@@ -1,6 +1,6 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import { AUTH } from '../constants/actionTypes';
+import { AUTH, LOGOUT } from '../constants/actionTypes';
 import * as api from '../api/index';
 
 export const signin =
@@ -28,3 +28,25 @@ export const signup =
       throw error.response.data.message;
     }
   };
+
+export const signout = (router: RouteComponentProps['history']) => async (dispatch: Dispatch) => {
+  try {
+    const { data } = await api.signOut();
+
+    dispatch({ type: LOGOUT });
+
+    router.push('/');
+  } catch (error) {
+    throw error.response.data.message;
+  }
+};
+
+export const checktoken = () => async (dispatch: Dispatch) => {
+  try {
+    const { data } = await api.checkToken();
+
+    dispatch({ type: AUTH, data });
+  } catch (error) {
+    throw error.response.data.message;
+  }
+};

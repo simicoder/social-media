@@ -7,18 +7,21 @@ import { AddPost } from './AddPost';
 import { Auth } from './Auth';
 import { SearchResult } from './SearchResult';
 import { theme } from '../theme/mainTheme';
+import { AuthChecker } from '../components/molecules/AuthChecker/AuthChecker';
 
 export function Root() {
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path={routes.home} component={Main} />
-          <Route exact path={routes.addPost} component={AddPost} />
-          <Route exact path={routes.auth} component={Auth} />
-          <Route exact path={routes.search} component={SearchResult} />
-        </Switch>
-      </BrowserRouter>
-    </ThemeProvider>
+    <AuthChecker>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path={routes.home} component={Main} />
+            <Route exact path={routes.addPost} component={AddPost} />
+            <Route exact path={routes.auth} component={Auth} />
+            <Route exact path={routes.search} component={SearchResult} />
+          </Switch>
+        </BrowserRouter>
+      </ThemeProvider>
+    </AuthChecker>
   );
 }

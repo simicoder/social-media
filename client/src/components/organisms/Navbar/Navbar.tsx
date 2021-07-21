@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { NavLink, Link, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LogoIcon from '../../../assets/Icons/LogoIcon.png';
 import { Button } from '../../atoms/Button/Button';
 import { ProfileImage } from '../../atoms/ProfileImage/ProfileImage';
@@ -10,6 +10,7 @@ import { SearchBar } from '../../molecules/SearchBar/SearchBar';
 import { useWindowWidth } from '../../../utils/useWindowWidth';
 import { SearchButton } from '../../atoms/SearchButton/SearchButton';
 import { BackButton } from '../../atoms/BackButton/BackButton';
+import { signout } from '../../../actions/auth';
 
 const StyledWrapper = styled.nav`
   display: flex;
@@ -69,18 +70,14 @@ type Props = {
 };
 
 export const Navbar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')!));
+  const user = useSelector((state: any) => state.auth.data);
   const [activeSearchBar, setActiveSearchBar] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const windowWidth = useWindowWidth();
 
   const logout = () => {
-    dispatch({ type: 'LOGOUT' });
-
-    history.push('/auth');
-
-    setUser(null);
+    dispatch(signout(history));
   };
 
   const setOpen = () => {

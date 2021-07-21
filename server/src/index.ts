@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import postRoutes from './routes/posts';
 import userRouter from './routes/user';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
@@ -12,7 +13,16 @@ dotenv.config();
 app.use('/uploads', express.static('uploads'));
 app.use(express.json({ limit: '30mb' }));
 app.use(express.urlencoded({ limit: '30mb', extended: true }));
-app.use(cors());
+app.use(cookieParser());
+
+const origin = process.env.CLIENT_URL ?? 'http://localhost:3000';
+
+app.use(
+  cors({
+    credentials: true,
+    origin,
+  }),
+);
 
 app.use('/posts', postRoutes);
 app.use('/user', userRouter);
