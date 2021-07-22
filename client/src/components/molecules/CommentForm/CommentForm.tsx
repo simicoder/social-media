@@ -58,7 +58,7 @@ export const CommentForm: React.FC<IProps> = ({ id }) => {
 
     const text = target.text.value;
 
-    if (text) {
+    if (text && user) {
       const creatorName = user.result.name;
       const creatorImage = user.result.imageUrl;
 

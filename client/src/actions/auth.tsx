@@ -35,7 +35,7 @@ export const signout = (router: RouteComponentProps['history']) => async (dispat
 
     dispatch({ type: LOGOUT });
 
-    router.push('/');
+    router.push('/auth');
   } catch (error) {
     throw error.response.data.message;
   }
