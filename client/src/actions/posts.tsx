@@ -60,10 +60,8 @@ export const commentPost =
 
 export const likePost =
   (id: number) => async (dispatch: (arg0: { type: string; payload: string }) => void) => {
-    const user = JSON.parse(localStorage.getItem('profile')!);
-
     try {
-      const { data } = await api.likePost(id, user?.token);
+      const { data } = await api.likePost(id);
 
       dispatch({ type: LIKE, payload: data });
     } catch (error) {

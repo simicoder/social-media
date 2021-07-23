@@ -5,7 +5,7 @@ const secret = 'test';
 
 const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = req.cookies.token;
+    const token = req.cookies.token || (req.headers.authorization as string);
     const isCustomAuth = token.length < 500;
 
     let decodedData;

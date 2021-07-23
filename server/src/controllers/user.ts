@@ -82,7 +82,7 @@ export const checkToken = async (req: Request, res: Response) => {
   try {
     const oldUser = await UserModal.findOne({ _id: userId }).lean();
 
-    if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
+    if (!oldUser) return res.json({ message: "User doesn't exist" });
 
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: '1d' });
 

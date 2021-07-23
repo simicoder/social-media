@@ -64,32 +64,31 @@ export const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdat
     e.preventDefault();
 
     if (croppie !== null && postData.title && user.result.name) {
-      croppie
-        .result({
-          type: 'blob',
-          size: {
-            width: 900,
-            height: 900,
-          },
-        })
-        .then((blob: Blob) => {
-          const formData = new FormData();
-          formData.append('title', postData.title);
-          formData.append('description', postData.description);
-          formData.append('creatorName', user.result.name);
-          formData.append('creatorImage', user.result.imageUrl);
-          formData.append('selectedFile', blob);
-          if (currentId === 0) {
-            dispatch(createPost(formData));
-            clear();
-          } else {
-            dispatch(updatePost(currentId, formData));
-            clear();
-          }
+      const croppieResult = await croppie.result({
+        type: 'blob',
+        size: {
+          width: 900,
+          height: 900,
+        },
+      });
 
-          history.push('/');
-          setIsUpdate && setIsUpdate(false);
-        });
+      const formData = new FormData();
+      formData.append('title', postData.title);
+      formData.append('description', postData.description);
+      formData.append('creatorName', user.result.name);
+      formData.append('creatorImage', user.result.imageUrl);
+      formData.append('selectedFile', croppieResult);
+
+      if (currentId === 0) {
+        dispatch(createPost(formData));
+      } else {
+        dispatch(updatePost(currentId, formData));
+      }
+
+      clear();
+
+      history.push('/');
+      setIsUpdate && setIsUpdate(false);
     }
   };
 

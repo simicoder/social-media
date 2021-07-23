@@ -106,41 +106,32 @@ export const AuthForm = () => {
     formData.append('email', form.email);
     formData.append('password', form.password);
 
-    if (validate()) {
-      if (isSignup) {
-        if (croppie !== null) {
-          croppie
-            .result({
+    try {
+      if (validate()) {
+        if (isSignup) {
+          if (croppie !== null) {
+            const croppieResult = await croppie.result({
               type: 'blob',
               size: {
                 width: 480,
                 height: 480,
               },
-            })
-            .then(async (blob: Blob) => {
-              formData.append('name', form.name);
-              formData.append('confirmPassword', form.confirmPassword);
-              formData.append('selectedFile', blob);
-
-              try {
-                (await dispatch(signup(formData, history))) as Dispatch;
-              } catch (err) {
-                setError(err);
-              }
-            })
-            .catch((err: React.SetStateAction<string>) => {
-              setError(err);
             });
+
+            formData.append('name', form.name);
+            formData.append('confirmPassword', form.confirmPassword);
+            formData.append('selectedFile', croppieResult);
+
+            await dispatch(signup(formData, history));
+          } else {
+            setError('image is not loaded, try again');
+          }
         } else {
-          setError('image is not loaded, try again');
-        }
-      } else {
-        try {
-          (await dispatch(signin(formData, history))) as Dispatch;
-        } catch (err) {
-          setError(err);
+          await dispatch(signin(formData, history));
         }
       }
+    } catch (err) {
+      setError(err);
     }
   };
 
@@ -148,7 +139,9 @@ export const AuthForm = () => {
     const result = res?.profileObj;
     const token = res?.tokenId;
 
-    dispatch({ type: AUTH, data: { result, token } });
+    localStorage.setItem('token', token);
+
+    dispatch({ type: AUTH, data: { result } });
 
     history.push('/');
   };

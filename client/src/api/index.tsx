@@ -4,8 +4,8 @@ import { hostUrl } from '../constants/url';
 const API = axios.create({ baseURL: hostUrl, withCredentials: true });
 
 API.interceptors.request.use((req) => {
-  if (localStorage.getItem('profile')) {
-    req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')!).token}`;
+  if (localStorage.getItem('token')) {
+    req.headers.Authorization = localStorage.getItem('token')!;
   }
 
   return req;
@@ -14,7 +14,7 @@ API.interceptors.request.use((req) => {
 export const fetchPosts = () => API.get('/posts');
 export const searchPosts = (text: string) => API.get(`/posts/search/${text}`);
 export const createPost = (newPost: FormData) => API.post('/posts', newPost);
-export const likePost = (id: number, userToken: string) => API.patch(`/posts/${id}/likePost`);
+export const likePost = (id: number) => API.patch(`/posts/${id}/likePost`);
 export const updatePost = (id: number, updatedPost: FormData) =>
   API.patch(`/posts/${id}`, updatedPost);
 export const commentPost = (id: number, comment: Object) =>
