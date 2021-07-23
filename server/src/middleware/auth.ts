@@ -22,7 +22,7 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
 
     next();
   } catch (error) {
-    res.status(400).json({ message: 'Invalid credentials' });
+    res.json({ message: 'Invalid credentials' });
   }
 };
 
