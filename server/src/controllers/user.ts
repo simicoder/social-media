@@ -80,7 +80,7 @@ export const checkToken = async (req: Request, res: Response) => {
   const userId = (req as any).userId;
 
   try {
-    const oldUser = await UserModal.findOne({ userId });
+    const oldUser = await UserModal.findOne({ _id: userId }).lean();
 
     if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
 
