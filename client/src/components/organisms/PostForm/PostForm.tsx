@@ -92,7 +92,7 @@ export const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdat
     }
   };
 
-  if (!user?.result.name) {
+  if (!user?.result) {
     return (
       <div>
         <h1>Please Sign In to publish data</h1>
