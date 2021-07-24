@@ -22,15 +22,15 @@ You can publish posts, write comments and share your memories with people on soc
 ## Screenshots 📺
 
 <p align="center">
-    <img src="https://ibb.co/XWwSMjJ" alt="Screenshot">
+    <img src="https://i.ibb.co/3TJBQ4h/sm1.png" alt="Screenshot">
 </p>
 
 <p align="center">
-    <img src="https://ibb.co/my9Jd0V" alt="Screenshot">
+    <img src="https://i.ibb.co/C9bB463/sm2.png" alt="Screenshot">
 </p>
 
 <p align="center">
-    <img src="https://ibb.co/zXbmPJj" alt="Screenshot">
+    <img src="https://i.ibb.co/0CZnYt8/sm3.png" alt="Screenshot">
 </p>
 
 ## Installation for client 💾
