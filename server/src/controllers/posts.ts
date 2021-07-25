@@ -31,8 +31,8 @@ export const searchPosts = async (req: Request, res: Response) => {
 
 export const createPost = async (req: Request, res: Response) => {
   const { title, description, creatorName, creatorImage } = req.body;
-  const creator = (req as any).userId;
-  const cloudinaryResult = await cloudinary.uploader.upload((req as any).file.path);
+  const creator = req.userId;
+  const cloudinaryResult = await cloudinary.uploader.upload(req.file.path);
   const selectedFile = cloudinaryResult.secure_url;
   const cloudinaryId = cloudinaryResult.public_id;
 
@@ -59,8 +59,8 @@ export const createPost = async (req: Request, res: Response) => {
 export const updatePost = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { title, description, creatorName, creatorImage } = req.body;
-  const creator = (req as any).userId;
-  const cloudinaryResult = await cloudinary.uploader.upload((req as any).file.path);
+  const creator = req.userId;
+  const cloudinaryResult = await cloudinary.uploader.upload(req.file.path);
   const selectedFile = cloudinaryResult.secure_url;
   const cloudinaryId = cloudinaryResult.public_id;
 
@@ -83,7 +83,7 @@ export const updatePost = async (req: Request, res: Response) => {
 export const commentPost = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { text, creatorName, creatorImage } = req.body;
-  const creator = (req as any).userId;
+  const creator = req.userId;
 
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
@@ -121,7 +121,7 @@ export const deletePost = async (req: Request, res: Response) => {
 export const likePost = async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  if (!(req as any).userId) {
+  if (!req.userId) {
     return res.json({ description: 'Unauthenticated' });
   }
 
@@ -129,14 +129,12 @@ export const likePost = async (req: Request, res: Response) => {
 
   const post = await Post.findById(id);
 
-  const index = (post as IPost).likes.findIndex((id) => id === String((req as any).userId));
+  const index = (post as IPost).likes.findIndex((id) => id === String(req.userId));
 
   if (index === -1) {
-    (post as IPost).likes.push((req as any).userId);
+    (post as IPost).likes.push(req.userId);
   } else {
-    (post as IPost).likes = (post as IPost).likes.filter(
-      (id) => id !== String((req as any).userId),
-    );
+    (post as IPost).likes = (post as IPost).likes.filter((id) => id !== String(req.userId));
   }
   const updatedPost = await Post.findByIdAndUpdate(id, post as IPost, { new: true });
   res.status(200).json(updatedPost);

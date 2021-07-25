@@ -26,7 +26,8 @@ export const signin = async (req: Request, res: Response) => {
       .status(200)
       .cookie('token', token, {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: 'none',
+        secure: true,
       })
       .json({ result: oldUser });
   } catch (err) {
@@ -37,7 +38,7 @@ export const signin = async (req: Request, res: Response) => {
 export const signup = async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
 
-  const cloudinaryResult = await cloudinary.uploader.upload((req as any).file.path);
+  const cloudinaryResult = await cloudinary.uploader.upload(req.file.path);
   const imageUrl = cloudinaryResult.secure_url;
   const cloudinaryId = cloudinaryResult.public_id;
 
@@ -66,18 +67,17 @@ export const signup = async (req: Request, res: Response) => {
       .status(201)
       .cookie('token', token, {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: 'none',
+        secure: true,
       })
       .json({ result });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
-
-    console.log(error);
   }
 };
 
 export const checkToken = async (req: Request, res: Response) => {
-  const userId = (req as any).userId;
+  const userId = req.userId;
 
   try {
     const oldUser = await UserModal.findOne({ _id: userId }).lean();
@@ -92,7 +92,8 @@ export const checkToken = async (req: Request, res: Response) => {
       .status(200)
       .cookie('token', token, {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: 'none',
+        secure: true,
       })
       .json({ result: oldUser });
   } catch (err) {
@@ -101,6 +102,10 @@ export const checkToken = async (req: Request, res: Response) => {
 };
 
 export const signOut = async (req: Request, res: Response) => {
-  res.clearCookie('token');
-  res.status(204).json({ message: 'Succesfully logged out!' });
+  try {
+    res.clearCookie('token');
+    res.status(204).json({ message: 'Succesfully logged out!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
 };
