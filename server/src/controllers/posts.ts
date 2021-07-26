@@ -1,15 +1,14 @@
 import express, { Request, Response } from 'express';
-import mongoose from 'mongoose';
-import { IPost } from '../models/Post';
-import cloudinary from '../middleware/cloudinary';
+import { IComment } from '../types/IComment';
+import { cloudinaryClient } from '../configs/cloudinary';
 
-import Post from '../models/Post';
+import { PostModel } from '../models/Post';
 
-const router = express.Router();
+export const router = express.Router();
 
 export const getPosts = async (req: Request, res: Response) => {
   try {
-    const Posts = await Post.find();
+    const Posts = await PostModel.find();
 
     res.status(200).json(Posts.reverse());
   } catch (error) {
@@ -21,7 +20,7 @@ export const searchPosts = async (req: Request, res: Response) => {
   const { text } = req.params;
 
   try {
-    const posts = await Post.find({ $text: { $search: text } });
+    const posts = await PostModel.find({ $text: { $search: text } });
 
     res.status(200).json(posts);
   } catch (error) {
@@ -32,11 +31,11 @@ export const searchPosts = async (req: Request, res: Response) => {
 export const createPost = async (req: Request, res: Response) => {
   const { title, description, creatorName, creatorImage } = req.body;
   const creator = req.userId;
-  const cloudinaryResult = await cloudinary.uploader.upload(req.file.path);
+  const cloudinaryResult = await cloudinaryClient.uploader.upload(req.file.path);
   const selectedFile = cloudinaryResult.secure_url;
   const cloudinaryId = cloudinaryResult.public_id;
 
-  const newPost = new Post({
+  const newPost = new PostModel({
     title,
     description,
     creatorName,
@@ -60,24 +59,37 @@ export const updatePost = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { title, description, creatorName, creatorImage } = req.body;
   const creator = req.userId;
-  const cloudinaryResult = await cloudinary.uploader.upload(req.file.path);
+  const cloudinaryResult = await cloudinaryClient.uploader.upload(req.file.path);
   const selectedFile = cloudinaryResult.secure_url;
   const cloudinaryId = cloudinaryResult.public_id;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+  try {
+    const post = await PostModel.findById(id);
+    if (!post) return res.status(404).send(`No post with id: ${id}`);
 
-  const post = await Post.findById(id);
-  await cloudinary.uploader.destroy((post as any).cloudinaryId);
+    await cloudinaryClient.uploader.destroy(post.cloudinaryId);
 
-  await Post.findByIdAndUpdate(
-    id,
-    { title, description, creator, creatorName, creatorImage, selectedFile, cloudinaryId, _id: id },
-    { new: true },
-  );
+    await PostModel.findByIdAndUpdate(
+      id,
+      {
+        title,
+        description,
+        creator,
+        creatorName,
+        creatorImage,
+        selectedFile,
+        cloudinaryId,
+        _id: id,
+      },
+      { new: true },
+    );
 
-  const updatedPost = await Post.findById(id);
+    const updatedPost = await PostModel.findById(id);
 
-  res.json(updatedPost);
+    res.json(updatedPost);
+  } catch (err) {
+    res.status(400).json({ message: 'Something went wrong' });
+  }
 };
 
 export const commentPost = async (req: Request, res: Response) => {
@@ -85,33 +97,37 @@ export const commentPost = async (req: Request, res: Response) => {
   const { text, creatorName, creatorImage } = req.body;
   const creator = req.userId;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+  try {
+    const post = await PostModel.findById(id);
 
-  const post = await Post.findById(id);
+    if (!post) return res.status(404).send(`No post with id: ${id}`);
 
-  const newComment: any = {
-    text,
-    creator,
-    creatorName,
-    creatorImage,
-  };
+    const newComment: IComment = {
+      text,
+      creator,
+      creatorName,
+      creatorImage,
+    };
 
-  (post as IPost).comments.unshift(newComment);
-  (post as IPost).save();
+    post.comments.unshift(newComment);
+    post.save();
 
-  res.json(post);
+    res.json(post);
+  } catch (err) {
+    res.status(400).send({ message: 'Something went wrong' });
+  }
 };
 
 export const deletePost = async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+  const post = await PostModel.findById(id);
 
-  const post = await Post.findById(id);
+  if (!post) return res.status(404).send(`No post with id: ${id}`);
 
   try {
-    await cloudinary.uploader.destroy((post as any).cloudinaryId);
-    await Post.findByIdAndRemove(id);
+    await cloudinaryClient.uploader.destroy(post.cloudinaryId);
+    await PostModel.findByIdAndRemove(id);
     res.json({ description: 'Post deleted successfully.' });
   } catch (err) {
     console.error(err);
@@ -125,19 +141,21 @@ export const likePost = async (req: Request, res: Response) => {
     return res.json({ description: 'Unauthenticated' });
   }
 
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+  try {
+    const post = await PostModel.findById(id);
 
-  const post = await Post.findById(id);
+    if (!post) return res.status(404).send(`No post with id: ${id}`);
 
-  const index = (post as IPost).likes.findIndex((id) => id === String(req.userId));
+    const index = post.likes.findIndex((id) => id === String(req.userId));
 
-  if (index === -1) {
-    (post as IPost).likes.push(req.userId);
-  } else {
-    (post as IPost).likes = (post as IPost).likes.filter((id) => id !== String(req.userId));
+    if (index === -1) {
+      post.likes.push(req.userId);
+    } else {
+      post.likes = post.likes.filter((id) => id !== String(req.userId));
+    }
+    const updatedPost = await PostModel.findByIdAndUpdate(id, post, { new: true });
+    res.status(200).json(updatedPost);
+  } catch (err) {
+    return res.status(400).send({ message: 'Something went wrong' });
   }
-  const updatedPost = await Post.findByIdAndUpdate(id, post as IPost, { new: true });
-  res.status(200).json(updatedPost);
 };
-
-export default router;

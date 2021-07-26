@@ -1,17 +1,5 @@
-import mongoose, { Document } from 'mongoose';
-
-export interface IPost extends Document {
-  title: String;
-  description: String;
-  creatorName: String;
-  selectedFile: String;
-  creatorImage: String;
-  creator: String;
-  likes: string[];
-  createdAt: Date;
-  comments: string[];
-  cloudinaryId: string;
-}
+import mongoose from 'mongoose';
+import { IPost } from '../types/IPost';
 
 const postSchema = new mongoose.Schema({
   title: String,
@@ -36,6 +24,4 @@ const postSchema = new mongoose.Schema({
 
 postSchema.index({ title: 'text', description: 'text' });
 
-var Post = mongoose.model<IPost>('Post', postSchema);
-
-export default Post;
+export const PostModel = mongoose.model<IPost>('Post', postSchema);

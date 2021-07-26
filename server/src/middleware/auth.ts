@@ -1,21 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-const secret = 'test';
+interface IdecodedData {
+  id: string;
+}
 
-const auth = async (req: Request, res: Response, next: NextFunction) => {
+export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.cookies.token || (req.headers.authorization as string);
     const isCustomAuth = token.length < 500;
 
-    let decodedData;
-
     if (token && isCustomAuth) {
-      decodedData = jwt.verify(token, secret) as any;
+      const decodedData = jwt.verify(token, process.env.JWT_SECRET_TOKEN as string) as IdecodedData;
 
-      req.userId = decodedData?.id;
+      req.userId = decodedData.id;
     } else {
-      decodedData = jwt.decode(token);
+      const decodedData = jwt.decode(token);
       req.userId = decodedData?.sub as string;
     }
 
@@ -24,5 +24,3 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
     res.json({ message: 'Invalid credentials' });
   }
 };
-
-export default auth;

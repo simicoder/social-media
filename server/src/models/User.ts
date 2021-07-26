@@ -1,13 +1,5 @@
-import mongoose, { Document } from 'mongoose';
-
-export interface IUser extends Document {
-  name: string;
-  email: string;
-  password: string;
-  id: string;
-  imageUrl: string;
-  cloudinaryId: string;
-}
+import mongoose from 'mongoose';
+import { IUser } from '../types/IUser';
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -18,4 +10,4 @@ const userSchema = new mongoose.Schema({
   cloudinaryId: { type: String, required: true },
 });
 
-export default mongoose.model<IUser>('User', userSchema);
+export const UserModel = mongoose.model<IUser>('User', userSchema);

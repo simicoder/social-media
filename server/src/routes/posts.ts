@@ -8,17 +8,15 @@ import {
   deletePost,
   commentPost,
 } from '../controllers/posts';
-import auth from '../middleware/auth';
-import upload from '../middleware/multerUpload';
+import { auth } from '../middleware/auth';
+import { upload } from '../middleware/multerUpload';
 
-const router = express.Router();
+export const postsRouter = express.Router();
 
-router.get('/', getPosts);
-router.get('/search/:text', searchPosts);
-router.post('/', upload.single('selectedFile'), auth, createPost);
-router.patch('/:id', upload.single('selectedFile'), auth, updatePost);
-router.patch('/comment/:id', auth, commentPost);
-router.delete('/:id', auth, deletePost);
-router.patch('/:id/likePost', auth, likePost);
-
-export default router;
+postsRouter.get('/', getPosts);
+postsRouter.get('/search/:text', searchPosts);
+postsRouter.post('/', upload.single('selectedFile'), auth, createPost);
+postsRouter.patch('/:id', upload.single('selectedFile'), auth, updatePost);
+postsRouter.patch('/comment/:id', auth, commentPost);
+postsRouter.delete('/:id', auth, deletePost);
+postsRouter.patch('/:id/likePost', auth, likePost);
