@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { checktoken } from '../../../actions/auth';
+import { checktoken } from '../../../redux/actions/auth';
 
 const StyledError = styled.p`
   position: absolute;

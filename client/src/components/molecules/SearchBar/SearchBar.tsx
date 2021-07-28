@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { SearchButton } from '../../atoms/SearchButton/SearchButton';
-import { searchPosts } from '../../../actions/posts';
+import { searchPosts } from '../../../redux/actions/posts';
 
 const StyledForm = styled.form`
   width: 90%;
@@ -29,14 +29,14 @@ interface IProps {
   handleSubmit: React.FormEventHandler<HTMLFormElement>;
 }
 
-export const SearchForm: React.FC<IProps> = ({ handleSubmit }) => (
+export const SearchForm = ({ handleSubmit }: IProps) => (
   <StyledForm onSubmit={handleSubmit} noValidate autoComplete="off">
     <StyledInput data-testid="input" name="text" placeholder="Search" />
     <SearchButton />
   </StyledForm>
 );
 
-export const SearchBar: React.FC = () => {
+export const SearchBar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const handleSubmit = async (e: React.SyntheticEvent) => {

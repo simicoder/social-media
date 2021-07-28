@@ -7,8 +7,7 @@ export const LikeIcon = styled.button<{ isActive: boolean }>`
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background-image: url(${({ isActive }) =>
-    isActive === true ? likeActiveIcon : likeUnActiveIcon});
+  background-image: url(${({ isActive }) => (isActive ? likeActiveIcon : likeUnActiveIcon)});
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 70% 70%;

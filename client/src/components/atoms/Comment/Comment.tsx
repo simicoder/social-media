@@ -1,39 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
 import moment from 'moment';
-import { IComments } from '../../molecules/Comments/types';
+import { IComment } from '../../../types/IComment';
 import { ProfileImage } from '../ProfileImage/ProfileImage';
 import { Paragraph } from '../Paragraph/Paragraph';
-
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: start;
-  width: 100%;
-  padding: 7px;
-`;
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 5px;
-  background-color: ${({ theme }) => theme.background};
-  padding: 5px;
-  border-radius: 10px;
-`;
-
-const StyledTime = styled.p`
-  font-size: 0.8em;
-  margin: 0;
-  color: ${({ theme }) => theme.lightColor};
-`;
+import { StyledWrapper, StyledContainer, StyledTime } from './Comment.styled';
 
 type IProps = {
-  comment: IComments;
+  comment: IComment;
 };
 
-export const Comment: React.FC<IProps> = ({ comment }) => (
+export const Comment = ({ comment }: IProps) => (
   <StyledWrapper>
     <ProfileImage alt="avatar" src={comment.creatorImage} />
     <StyledContainer>

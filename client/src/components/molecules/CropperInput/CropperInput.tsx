@@ -1,53 +1,36 @@
 import React, { useState, useRef } from 'react';
-import styled from 'styled-components';
 import Croppie from 'croppie';
 import 'croppie/croppie.css';
 import { useWindowWidth } from '../../../utils/useWindowWidth';
 import { ButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import removeIcon from '../../../assets/Icons/removeIcon.svg';
 import addIcon from '../../../assets/Icons/addIcon.svg';
-import { IPropsInput, IPropsCropperInput } from './types';
+import {
+  StyledFileInput,
+  StyledFileButton,
+  StyledButtonsWrapper,
+  StyledImg,
+  StyledImageCropper,
+} from './CropperInput.styled';
 
-const StyledFileInput = styled.input`
-  display: none;
-`;
+interface IPropsInput {
+  handleImage: React.ChangeEventHandler<HTMLInputElement>;
+  croppie: any;
+  data: IData;
+}
 
-const StyledFileButton = styled.button`
-  margin: 10px;
-  background-color: transparent;
-  transition: all 0.2s;
-  border: none;
+interface IData {
+  selectedFile: Blob;
+  urlSelectedFile: string;
+}
 
-  :hover {
-    transform: scale(1.05);
-  }
-`;
+interface IPropsCropperInput {
+  defaultImg: string;
+  setCroppie: Function;
+  croppie: any;
+}
 
-const StyledButtonsWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 40%;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.button};
-`;
-
-const StyledImg = styled.div<{ src: string }>`
-  margin-top: 10px;
-  background: no-repeat 50% 50%/90% 90% url(${({ src }) => src});
-  width: 300px;
-  height: 300px;
-  border-radius: 2px;
-  border: none;
-`;
-
-const StyledImageCropper = styled.div`
-  margin-top: 20px;
-`;
-
-export const Input: React.FC<IPropsInput> = ({ handleImage, croppie, data }) => {
+export const Input = ({ handleImage, croppie, data }: IPropsInput) => {
   const fileInput = useRef<HTMLInputElement>(null);
 
   return (
@@ -96,7 +79,7 @@ export const Input: React.FC<IPropsInput> = ({ handleImage, croppie, data }) => 
   );
 };
 
-export const CropperInput: React.FC<IPropsCropperInput> = ({ defaultImg, setCroppie, croppie }) => {
+export const CropperInput = ({ defaultImg, setCroppie, croppie }: IPropsCropperInput) => {
   const windowWidth = useWindowWidth();
 
   const initialState = {

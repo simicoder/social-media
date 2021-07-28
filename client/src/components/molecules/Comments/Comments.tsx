@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Comment } from '../../atoms/Comment/Comment';
-import { IProps } from './types';
+import { IComment } from '../../../types/IComment';
 
 const StyledWrapper = styled.form`
   display: flex;
@@ -30,10 +30,14 @@ const StyledWrapper = styled.form`
   }
 `;
 
-export const Comments: React.FC<IProps> = ({ comments }) => (
+interface IProps {
+  comments: Array<IComment>;
+}
+
+export const Comments = ({ comments }: IProps) => (
   <StyledWrapper>
-    {comments.map((comment, i) => (
-      <Comment key={i} comment={comment} />
+    {comments.map((comment) => (
+      <Comment key={comment._id} comment={comment} />
     ))}
   </StyledWrapper>
 );

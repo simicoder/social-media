@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Croppie from 'croppie';
-import { createPost, updatePost } from '../../../actions/posts';
+import { createPost, updatePost } from '../../../redux/actions/posts';
 import uploadFileIcon from '../../../assets/Icons/uploadFileIcon.svg';
 import { TextInput } from '../../atoms/TextInput/TextInput';
 import { Button } from '../../atoms/Button/Button';
 import { Textarea } from '../../atoms/Textarea/Textarea';
 import { CropperInput } from '../../molecules/CropperInput/CropperInput';
-import { IProps, IPostData } from './types';
-import { IPost } from '../Post/types';
+import { IPost } from '../../../types/IPost';
+import { RootState } from '../../../redux/store';
 
 const StyledForm = styled.form`
   display: flex;
@@ -39,17 +39,28 @@ const initialState = {
   description: '',
 };
 
-export const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdate }) => {
+interface IPostData {
+  title: string;
+  description: string;
+}
+
+interface IProps {
+  currentId: number;
+  setCurrentId: Function;
+  setIsUpdate: Function | null;
+}
+
+export const PostForm = ({ currentId, setCurrentId, setIsUpdate }: IProps) => {
   const [postData, setPostData] = useState<IPostData>(initialState);
   const [croppie, setCroppie] = useState<Croppie | null>(null);
 
-  const post: IPost | null | undefined = useSelector((state: { posts: Array<IPost> }) =>
+  const post = useSelector((state: RootState) =>
     currentId ? state.posts.find((postItem: IPost) => postItem._id === currentId) : null,
   );
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = useSelector((state: any) => state.auth.data);
+  const user = useSelector((state: RootState) => state.auth.data);
 
   useEffect(() => {
     if (post) setPostData(post);
@@ -63,7 +74,7 @@ export const PostForm: React.FC<IProps> = ({ currentId, setCurrentId, setIsUpdat
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    if (croppie !== null && postData.title && user.result.name) {
+    if (croppie !== null && postData.title && user?.result.name) {
       const croppieResult = await croppie.result({
         type: 'blob',
         size: {

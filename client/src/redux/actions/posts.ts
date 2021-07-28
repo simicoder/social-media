@@ -1,5 +1,5 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
-import * as api from '../api/index';
+import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../actionTypes';
+import * as api from '../../api/index';
 
 export const getPosts =
   () => async (dispatch: (arg0: { type: string; payload: string }) => void) => {

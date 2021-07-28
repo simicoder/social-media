@@ -3,7 +3,7 @@ import { render as rtlRender } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
-import { reducers } from '../reducers/index';
+import { reducers } from '../redux/reducers/index';
 
 interface IWrapper {
   children: React.ReactNode;

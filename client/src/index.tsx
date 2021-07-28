@@ -1,15 +1,12 @@
 import React from 'react';
-import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { Root } from './views/Root';
 import reportWebVitals from './reportWebVitals';
-import { reducers } from './reducers';
 import { worker } from './mocks/browser';
+import { store } from './redux/store';
 
-export const store = configureStore({ reducer: reducers });
-
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'test') {
   worker.start();
 }
 

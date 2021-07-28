@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { commentPost } from '../../../actions/posts';
+import { commentPost } from '../../../redux/actions/posts';
 import { ButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import sendIcon from '../../../assets/Icons/sendIcon.svg';
+import { RootState } from '../../../redux/store';
 
 const StyledForm = styled.form`
   width: 90%;
@@ -28,15 +29,24 @@ const StyledInput = styled.input`
 
 interface IPropsForm {
   handleSubmit: React.FormEventHandler<HTMLFormElement>;
+  handleChange: React.ChangeEventHandler<HTMLInputElement>;
+  text: string;
 }
 
 interface IProps {
   id: number;
 }
 
-export const Form: React.FC<IPropsForm> = ({ handleSubmit }) => (
+export const Form = ({ handleSubmit, handleChange, text }: IPropsForm) => (
   <StyledForm onSubmit={handleSubmit} noValidate autoComplete="off">
-    <StyledInput data-testid="input" name="text" placeholder="Comment" required />
+    <StyledInput
+      data-testid="input"
+      name="text"
+      placeholder="Comment"
+      onChange={handleChange}
+      value={text}
+      required
+    />
     <ButtonIcon
       aria-label="send comment"
       data-testid="submit"
@@ -47,25 +57,28 @@ export const Form: React.FC<IPropsForm> = ({ handleSubmit }) => (
   </StyledForm>
 );
 
-export const CommentForm: React.FC<IProps> = ({ id }) => {
+export const CommentForm = ({ id }: IProps) => {
   const dispatch = useDispatch();
-  const user = useSelector((state: any) => state.auth.data);
+  const user = useSelector((state: RootState) => state.auth.data);
+  const [text, setText] = useState('');
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  useEffect(() => {
+    if (text) setText(text);
+  }, [text]);
+
+  const handleChange = (e: { target: { value: string } }) => setText(e.target.value);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const target = e.target as typeof e.target & { text: { value: string } };
-
-    const text = target.text.value;
 
     if (text && user) {
       const creatorName = user.result.name;
       const creatorImage = user.result.imageUrl;
 
       dispatch(commentPost(id, { text, creatorName, creatorImage }));
-      target.text.value = '';
+      setText('');
     }
   };
 
-  return <Form handleSubmit={handleSubmit} />;
+  return <Form handleSubmit={handleSubmit} handleChange={handleChange} text={text} />;
 };

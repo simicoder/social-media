@@ -1,11 +1,8 @@
-export type IProps = {
-  comments: Array<IComments>;
-};
-
-export interface IComments {
+export interface IComment {
   text: String;
   creator: String;
   creatorName: String;
   creatorImage: string;
   created: Date;
+  _id: string;
 }

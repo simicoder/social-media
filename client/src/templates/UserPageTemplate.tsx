@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Navbar } from '../components/organisms/Navbar/Navbar';
 import { Sidebar } from '../components/organisms/Sidebar/Sidebar';
 import { SkipToContent } from '../components/atoms/SkipToContent/SkipToContent';
+import { useWindowWidth } from '../utils/useWindowWidth';
 
 const StyledWrapper = styled.section`
   padding-top: 70px;
@@ -11,31 +12,24 @@ const StyledWrapper = styled.section`
   align-items: center;
 `;
 
-type Props = {
+interface IProps {
   children: React.ReactNode;
-};
+}
 
-export const UserPageTemplate: React.FC<Props> = ({ children }) => {
+export const UserPageTemplate = ({ children }: IProps) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const mainSection = useRef<HTMLInputElement>(null);
 
+  const windowWidth = useWindowWidth();
+
+  useEffect(() => {
+    setIsOpen(windowWidth >= 1024);
+  }, [windowWidth]);
+
   const handleSkipToContent = () => {
     mainSection.current && mainSection.current.focus();
   };
-
-  const updateViewState = () => {
-    if (document.documentElement.clientWidth < 1024) {
-      setIsOpen(false);
-    } else if (document.documentElement.clientWidth > 1024) {
-      setIsOpen(true);
-    }
-  };
-
-  useEffect(() => {
-    updateViewState();
-    window.addEventListener('resize', updateViewState);
-  }, []);
 
   return (
     <>

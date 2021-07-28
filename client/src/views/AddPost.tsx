@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { UserPageTemplate } from '../templates/UserPageTemplate';
-import GlobalStyle from '../theme/GlobalStyle';
+import { GlobalStyle } from '../theme/GlobalStyle';
 import { PostForm } from '../components/organisms/PostForm/PostForm';
 
-export const AddPost: React.FC = () => {
+export const AddPost = () => {
   const [currentId, setCurrentId] = useState(0);
 
   return (

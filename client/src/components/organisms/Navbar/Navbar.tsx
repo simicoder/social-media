@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { NavLink, Link, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import LogoIcon from '../../../assets/Icons/LogoIcon.png';
 import { Button } from '../../atoms/Button/Button';
 import { ProfileImage } from '../../atoms/ProfileImage/ProfileImage';
 import { MenuButton } from '../../atoms/MenuButton/MenuButton';
@@ -10,67 +8,23 @@ import { SearchBar } from '../../molecules/SearchBar/SearchBar';
 import { useWindowWidth } from '../../../utils/useWindowWidth';
 import { SearchButton } from '../../atoms/SearchButton/SearchButton';
 import { BackButton } from '../../atoms/BackButton/BackButton';
-import { signout } from '../../../actions/auth';
+import { signout } from '../../../redux/actions/auth';
+import {
+  StyledWrapper,
+  StyledLogoContainer,
+  StyledLogoLink,
+  StyledSearchBarContainer,
+  StyledProfileContainer,
+} from './Navbar.styled';
+import { RootState } from '../../../redux/store';
 
-const StyledWrapper = styled.nav`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  padding: 0px;
-  background-color: ${({ theme }) => theme.itemsBackground};
-  align-items: center;
-  text-align: center;
-  position: fixed;
-  justify-content: space-evenly;
-  z-index: 9999;
-  min-height: 48px;
-`;
-
-const StyledLogoContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-left: 5px;
-`;
-
-const StyledLogoLink = styled(NavLink)`
-  display: block;
-  width: 50px;
-  height: 50px;
-  background-image: url(${LogoIcon});
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: 100%;
-  border: none;
-  margin: 0.5vh 0 0.5vh 0.5vh;
-
-  @media only screen and (max-width: 600px) {
-    margin: 0.5vh 0 0.5vh 0;
-  }
-`;
-
-const StyledSearchBarContainer = styled.div`
-  width: 600px;
-`;
-
-const StyledProfileContainer = styled.div`
-  margin-right: 40px;
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-
-  @media only screen and (max-width: 600px) {
-    margin-right: 10px;
-  }
-`;
-
-type Props = {
+interface IProps {
   isOpen: boolean;
   setIsOpen: Function;
-};
+}
 
-export const Navbar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
-  const user = useSelector((state: any) => state.auth.data);
+export const Navbar = ({ isOpen, setIsOpen }: IProps) => {
+  const user = useSelector((state: RootState) => state.auth.data);
   const [activeSearchBar, setActiveSearchBar] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();

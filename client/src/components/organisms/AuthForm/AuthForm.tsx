@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Dispatch } from 'redux';
 import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import styled from 'styled-components';
 import Croppie from 'croppie';
-import { signin, signup } from '../../../actions/auth';
-import { AUTH } from '../../../constants/actionTypes';
+import { signin, signup } from '../../../redux/actions/auth';
+import { AUTH } from '../../../redux/actionTypes';
 import { TextInput } from '../../atoms/TextInput/TextInput';
 import { Button } from '../../atoms/Button/Button';
 import profileIcon from '../../../assets/Icons/profileIcon.svg';

@@ -1,7 +1,7 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import { AUTH, LOGOUT } from '../constants/actionTypes';
-import * as api from '../api/index';
+import { AUTH, LOGOUT } from '../actionTypes';
+import * as api from '../../api/index';
 
 export const signin =
   (formData: FormData, router: RouteComponentProps['history']) => async (dispatch: Dispatch) => {

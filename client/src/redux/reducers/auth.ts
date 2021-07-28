@@ -1,12 +1,13 @@
-import * as actionType from '../constants/actionTypes';
+import * as actionType from '../actionTypes';
+import { IUser } from '../../types/IUser';
 
 interface IState {
-  data: FormData | null | undefined;
+  data: IUser | null | undefined;
 }
 
 export const authReducer = (
   state: IState = { data: null },
-  action: { type: string; data?: FormData },
+  action: { type: string; data?: IUser },
 ) => {
   switch (action.type) {
     case actionType.AUTH:

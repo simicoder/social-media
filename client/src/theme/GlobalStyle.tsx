@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle<{ theme }>`  
+export const GlobalStyle = createGlobalStyle<{ theme }>`  
   *, *::before, *::after {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
@@ -38,5 +38,3 @@ const GlobalStyle = createGlobalStyle<{ theme }>`
   }
   }
 `;
-
-export default GlobalStyle;

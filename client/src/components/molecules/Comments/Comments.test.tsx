@@ -12,6 +12,7 @@ it('displaying normal comments', async () => {
       created: new Date(),
       creatorImage:
         'https://res.cloudinary.com/social-media-simi/image/upload/v1622728732/jacdcws6xcvedhkaf62u.png',
+      _id: '324325325trgfdgrt36',
     },
     {
       text: 'text of comment2',
@@ -20,6 +21,7 @@ it('displaying normal comments', async () => {
       created: new Date(),
       creatorImage:
         'https://res.cloudinary.com/social-media-simi/image/upload/v1622728732/jacdcws6xcvedhkaf62u.png',
+      _id: '3232deaes78977',
     },
   ];
 
