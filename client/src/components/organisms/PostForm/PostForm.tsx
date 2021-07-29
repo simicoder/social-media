@@ -59,7 +59,7 @@ interface IPropsForm {
 interface IPropsPostForm {
   currentId: number;
   setCurrentId: React.Dispatch<React.SetStateAction<number>>;
-  setIsUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsUpdate: React.Dispatch<React.SetStateAction<boolean>> | null;
 }
 
 export const Form = ({
