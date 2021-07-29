@@ -26,8 +26,8 @@ interface IData {
 
 interface IPropsCropperInput {
   defaultImg: string;
-  setCroppie: Function;
-  croppie: any;
+  setCroppie: React.Dispatch<React.SetStateAction<Croppie | null>>;
+  croppie: Croppie | null;
 }
 
 export const Input = ({ handleImage, croppie, data }: IPropsInput) => {

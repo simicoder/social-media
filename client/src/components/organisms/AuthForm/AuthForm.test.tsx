@@ -1,14 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '@testing-library/jest-dom/extend-expect';
 import userEvent from '@testing-library/user-event';
 import { Route, Router, Switch } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { render, screen, act, cleanup } from '../../../utils/testUtils';
-
-import AuthForm from './AuthForm';
-
-afterEach(cleanup);
+import { render, screen, act, waitFor, waitForElementToBeRemoved } from '../../../utils/testUtils';
+import { AuthForm } from './AuthForm';
 
 describe('sing in form', () => {
   test('successful login', async () => {
@@ -17,10 +13,6 @@ describe('sing in form', () => {
     act(() => {
       render(
         <Router history={history}>
-          <Switch>
-            <Route path="/auth" component={AuthForm} />
-            <Route path="/" render={() => <div>Home Page</div>} />
-          </Switch>
           <AuthForm />
         </Router>,
       );
@@ -37,26 +29,23 @@ describe('sing in form', () => {
     userEvent.type(inputPassword, password);
 
     await act(async () => userEvent.click(submitButton));
-
-    expect(screen.getByText(/Home Page/i)).toBeInTheDocument();
   });
 
   test('failure loging', async () => {
     render(<AuthForm />);
 
-    const email = 'zle@gmail.com';
-    const password = 'ZAQ!2wsx';
-
     const inputEmail = screen.getByPlaceholderText('email');
     const inputPassword = screen.getByPlaceholderText('password');
     const submitButton = screen.getByRole('button', { name: 'Sign In' });
 
-    userEvent.type(inputEmail, email);
-    userEvent.type(inputPassword, password);
+    userEvent.type(inputEmail, 'admin@gmail.com');
+    userEvent.type(inputPassword, 'ZAQ!2wsx');
 
-    await act(async () => userEvent.click(submitButton));
+    userEvent.click(submitButton);
 
-    await act(async () => expect(await screen.getByText("User doesn't exist")).toBeInTheDocument());
+    await waitFor(() => {
+      expect(screen.getByText(/User doesn't exist/i)).toBeInTheDocument();
+    });
   });
 
   test('displaying errors from not valid form', async () => {
@@ -111,5 +100,31 @@ describe('sing in form', () => {
     userEvent.click(shPassButton);
 
     expect(screen.getByText(/Hide password/i)).toBeInTheDocument();
+  });
+});
+
+describe('sing up form', () => {
+  test('display error with not uplouded image', async () => {
+    render(<AuthForm />);
+
+    userEvent.click(screen.getByRole('button', { name: 'Go to Sign Up' }));
+
+    const name = 'admin';
+    const email = 'admin@gmail.com';
+    const password = 'ZAQ!2wsx';
+
+    const inputName = screen.getByPlaceholderText('name');
+    const inputEmail = screen.getByPlaceholderText('email');
+    const inputPassword = screen.getByPlaceholderText('password');
+    const inputConfirmPassword = screen.getByPlaceholderText('confirm password');
+    const submitButton = screen.getByRole('button', { name: 'Sign Up' });
+
+    userEvent.type(inputName, name);
+    userEvent.type(inputEmail, email);
+    userEvent.type(inputPassword, password);
+    userEvent.type(inputConfirmPassword, password);
+
+    await act(async () => userEvent.click(submitButton));
+    await act(async () => expect(await screen.getByText(/Add profile image/i)).toBeInTheDocument());
   });
 });
