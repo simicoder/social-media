@@ -20,7 +20,7 @@ import { RootState } from '../../../redux/store';
 
 interface IProps {
   isOpen: boolean;
-  setIsOpen: Function;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const Navbar = ({ isOpen, setIsOpen }: IProps) => {

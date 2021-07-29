@@ -10,6 +10,7 @@ import { Button } from '../../atoms/Button/Button';
 import { Textarea } from '../../atoms/Textarea/Textarea';
 import { CropperInput } from '../../molecules/CropperInput/CropperInput';
 import { IPost } from '../../../types/IPost';
+import { IUser } from '../../../types/IUser';
 import { RootState } from '../../../redux/store';
 
 const StyledForm = styled.form`
@@ -44,13 +45,77 @@ interface IPostData {
   description: string;
 }
 
-interface IProps {
-  currentId: number;
-  setCurrentId: Function;
-  setIsUpdate: Function | null;
+interface IPropsForm {
+  setCurrentId: React.Dispatch<React.SetStateAction<number>>;
+  handleSubmit: React.FormEventHandler<HTMLFormElement>;
+  user: IUser | null | undefined;
+  postData: IPostData;
+  setPostData: React.Dispatch<React.SetStateAction<IPostData>>;
+  croppie: Croppie | null;
+  setCroppie: React.Dispatch<React.SetStateAction<Croppie | null>>;
+  post: IPost | null | undefined;
 }
 
-export const PostForm = ({ currentId, setCurrentId, setIsUpdate }: IProps) => {
+interface IPropsPostForm {
+  currentId: number;
+  setCurrentId: React.Dispatch<React.SetStateAction<number>>;
+  setIsUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const Form = ({
+  setCurrentId,
+  handleSubmit,
+  user,
+  postData,
+  setPostData,
+  croppie,
+  setCroppie,
+  post,
+}: IPropsForm) => {
+  const clear = () => {
+    setCurrentId(0);
+    setPostData({ title: '', description: '' });
+  };
+
+  if (!user?.result) {
+    return (
+      <div>
+        <h1>Please Sign In to publish data</h1>
+      </div>
+    );
+  }
+
+  return (
+    <StyledForm autoComplete="off" noValidate onSubmit={handleSubmit} encType="multipart/form-data">
+      <StyledTitle>{post ? `Editing "${post.title}"` : 'Create a Post'}</StyledTitle>
+      <TextInput
+        type="text"
+        maxLength={25}
+        name="title"
+        label="title"
+        value={postData.title}
+        onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+      />
+      <Textarea
+        name="description"
+        placeholder="description"
+        value={postData.description}
+        onChange={(e) => setPostData({ ...postData, description: e.target.value })}
+      />
+      <CropperInput
+        defaultImg={post ? post.selectedFile : uploadFileIcon}
+        setCroppie={setCroppie}
+        croppie={croppie}
+      />
+      <Button type="submit">Submit</Button>
+      <Button type="reset" onClick={clear}>
+        Clear
+      </Button>
+    </StyledForm>
+  );
+};
+
+export const PostForm = ({ currentId, setCurrentId, setIsUpdate }: IPropsPostForm) => {
   const [postData, setPostData] = useState<IPostData>(initialState);
   const [croppie, setCroppie] = useState<Croppie | null>(null);
 
@@ -103,40 +168,16 @@ export const PostForm = ({ currentId, setCurrentId, setIsUpdate }: IProps) => {
     }
   };
 
-  if (!user?.result) {
-    return (
-      <div>
-        <h1>Please Sign In to publish data</h1>
-      </div>
-    );
-  }
-
   return (
-    <StyledForm autoComplete="off" noValidate onSubmit={handleSubmit} encType="multipart/form-data">
-      <StyledTitle>{post ? `Editing "${post.title}"` : 'Create a Post'}</StyledTitle>
-      <TextInput
-        type="text"
-        maxLength={25}
-        name="title"
-        label="title"
-        value={postData.title}
-        onChange={(e) => setPostData({ ...postData, title: e.target.value })}
-      />
-      <Textarea
-        name="description"
-        placeholder="description"
-        value={postData.description}
-        onChange={(e) => setPostData({ ...postData, description: e.target.value })}
-      />
-      <CropperInput
-        defaultImg={post ? post.selectedFile : uploadFileIcon}
-        setCroppie={setCroppie}
-        croppie={croppie}
-      />
-      <Button type="submit">Submit</Button>
-      <Button type="reset" onClick={clear}>
-        Clear
-      </Button>
-    </StyledForm>
+    <Form
+      setCurrentId={setCurrentId}
+      handleSubmit={handleSubmit}
+      user={user}
+      postData={postData}
+      setPostData={setPostData}
+      croppie={croppie}
+      setCroppie={setCroppie}
+      post={post}
+    />
   );
 };
