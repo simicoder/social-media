@@ -1,0 +1,29 @@
+{
+    "name": "root",
+    "version": "0.1.0",
+    "private": true,
+    "workspaces": {
+        "packages": [
+          "packages/*"
+        ]
+      },
+    "scripts": {
+        "start:server": "lerna run start --scope=server",
+        "dev:client": "lerna run dev --scope=client",
+        "dev:server": "lerna run dev --scope=server",
+        "dev": "lerna run dev",
+        "build-client": "lerna run build --scope=client",
+        "build-server": "lerna run build --scope=server",
+        "heroku-postbuild": "lerna run build --scope=server",
+        "cy:open-only": "cypress open",
+        "cy:run-only": "cypress run",
+        "cy:open": "start-server-and-test dev 3000 cy:open-only",
+        "cy:run": "start-server-and-test dev 3000 cy:run-only"
+    },
+    "devDependencies": {
+        "cypress": "^8.2.0",
+        "start-server-and-test": "^1.13.1",
+        "typescript": "^4.3.5",
+        "lerna": "^4.0.0"
+    }
+}

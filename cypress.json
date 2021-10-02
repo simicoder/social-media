@@ -1,0 +1,20 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "projectId": "7s5okt",
+  "integrationFolder": "cypress/e2e",
+  "viewportHeight": 1000,
+  "viewportWidth": 1280,
+  "retries": {
+    "runMode": 2,
+    "openMode": 1
+  },
+  "env": {
+    "apiUrl": "http://localhost:5000",
+    "mobileViewportWidthBreakpoint": 414,
+    "coverage": false,
+    "codeCoverage": {
+      "url": "http://localhost:5000/__coverage__"
+    }
+  },
+  "experimentalStudio": true
+}

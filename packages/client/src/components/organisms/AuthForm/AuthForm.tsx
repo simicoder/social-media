@@ -130,7 +130,7 @@ export const AuthForm = () => {
         }
       }
     } catch (err) {
-      setError(err);
+      setError(err as string);
     }
   };
 

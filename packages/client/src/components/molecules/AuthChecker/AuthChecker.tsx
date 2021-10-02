@@ -18,7 +18,7 @@ export const AuthChecker = ({ children }) => {
     try {
       dispatch(checktoken());
     } catch (err) {
-      setError(err);
+      setError(err as string);
     }
   }, []);
 

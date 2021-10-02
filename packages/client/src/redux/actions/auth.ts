@@ -12,7 +12,7 @@ export const signin =
 
       router.push('/');
     } catch (error) {
-      throw error.response.data.message;
+      throw (error as { response: { data: { message: string } } }).response.data.message;
     }
   };
 
@@ -25,7 +25,7 @@ export const signup =
 
       router.push('/');
     } catch (error) {
-      throw error.response.data.message;
+      throw (error as { response: { data: { message: string } } }).response.data.message;
     }
   };
 
@@ -37,7 +37,7 @@ export const signout = (router: RouteComponentProps['history']) => async (dispat
 
     router.push('/auth');
   } catch (error) {
-    throw error.response.data.message;
+    throw (error as { response: { data: { message: string } } }).response.data.message;
   }
 };
 
@@ -47,6 +47,6 @@ export const checktoken = () => async (dispatch: Dispatch) => {
 
     dispatch({ type: AUTH, data });
   } catch (error) {
-    throw error.response.data.message;
+    throw (error as { response: { data: { message: string } } }).response.data.message;
   }
 };

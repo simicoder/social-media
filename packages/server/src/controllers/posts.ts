@@ -12,7 +12,7 @@ export const getPosts = async (req: Request, res: Response) => {
 
     res.status(200).json(Posts.reverse());
   } catch (error) {
-    res.status(404).json({ description: error.description });
+    res.status(404).json({ description: (error as { description: string }).description });
   }
 };
 
@@ -24,7 +24,7 @@ export const searchPosts = async (req: Request, res: Response) => {
 
     res.status(200).json(posts);
   } catch (error) {
-    res.status(404).json({ description: error.description });
+    res.status(404).json({ description: (error as { description: string }).description });
   }
 };
 
@@ -51,7 +51,7 @@ export const createPost = async (req: Request, res: Response) => {
 
     res.status(201).json(newPost);
   } catch (error) {
-    res.status(409).json({ description: error.description });
+    res.status(409).json({ description: (error as { description: string }).description });
   }
 };
 
