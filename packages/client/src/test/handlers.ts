@@ -1,9 +1,18 @@
-import { Request, Response } from 'express';
 import { rest } from 'msw';
 import { postsRes, userRes } from './data';
 
+interface UserBody {
+  email: string;
+}
+
+interface PostBody {
+  title: string;
+  description: string;
+  creatorName: string;
+}
+
 export const handlers = [
-  rest.post('http://localhost/api/user/signin', (req: Request, res: Response, ctx) => {
+  rest.post<UserBody>('http://localhost/api/user/signin', (req, res, ctx) => {
     if (req.body.email == userRes.result.email) {
       return res(ctx.json(userRes));
     }
@@ -11,20 +20,18 @@ export const handlers = [
     return res(ctx.status(404), ctx.json({ message: "User doesn't exist" }));
   }),
 
-  rest.post('http://localhost/api/user/signup', (req: Request, res: Response, ctx) => {
+  rest.post<UserBody>('http://localhost/api/user/signup', (req, res, ctx) => {
     if (req.body.email == userRes.result.email) {
       return res(ctx.status(404), ctx.json({ message: 'User already exists' }));
     }
     return res(ctx.json(userRes), ctx.delay(150));
   }),
 
-  rest.get('http://localhost/api/user/posts', (req: Request, res: Response, ctx) =>
-    res(ctx.json(postsRes)),
-  ),
+  rest.get('http://localhost/api/user/posts', (req, res, ctx) => res(ctx.json(postsRes))),
 
-  rest.post(
+  rest.post<PostBody>(
     'http://localhost/api/user/posts/',
-    (req: Request, res: Response, ctx) => {
+    (req, res, ctx) => {
       const postRes = {
         creatorImage:
           'https://res.cloudinary.com/social-media-simi/image/upload/v1622739072/hbl8nlsm8mvrqbklqxnd.png',
