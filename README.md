@@ -33,20 +33,7 @@ You can publish posts, write comments and share your memories with people on soc
     <img src="https://i.ibb.co/0CZnYt8/sm3.png" alt="Screenshot">
 </p>
 
-## Installation for client 💾
-```bash
-
-git clone https://github.com/simicoder/social-media.git
-
-cd client
-
-npm install
-
-npm run start
-
-```
-
-## Installation for server 💾
+## Installation 💾
 ```bash
 
 git clone https://github.com/simicoder/social-media.git
