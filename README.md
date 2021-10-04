@@ -51,32 +51,13 @@ npm run start
 
 git clone https://github.com/simicoder/social-media.git
 
-cd server
+yarn install
 
-npm install
+cp packages/server/.env-sample packages/server/.env #set up environment variables
 
-npm run dev
+yarn dev
 
 ```
-
-
-## Available scripts for client
-
-| Command                   | Description                   |     |
-| ------------------------- | ----------------------------- | --- |
-| `npm run start`           | Open local server             |     |
-| `npm run build`           | Create optimized build        |     |
-| `npm run test`            | Run tests                     |     |
-
-## Available scripts for server
-
-| Command                   | Description                   |     |
-| ------------------------- | ----------------------------- | --- |
-| `npm run start`           | Open local server with js     |     |
-| `npm run dev`             | Open local server with ts     |     |
-| `npm run build`           | Create optimized build        |     |
-| `npm run deploy`          | Deploy app to Heroku          |     |
-
 
 ## Live 📍
 
